@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "io.github.muharremgok1989_commits.twa",
+        "sha256_cert_fingerprints": ["9E:98:D0:4F:57:98:DB:4F:F0:72:F7:CE:AE:94:7F:C3:A1:33:46:BD:8A:78:CF:A9:EA:87:6C:C8:B8:CF:82:FE"]
+      }
+    }]
