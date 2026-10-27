@@ -384,8 +384,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   ⚠️ Bu sayfayı WhatsApp'tan "dosya" olarak açtın, bu yüzden ses/mikrofon ve kayıt düzgün çalışmayabilir ve yarın tekrar bulamayabilirsin.
   Lütfen doğru linki aç: <a id="originWarnLink" href="https://claude.ai/artifact/FebcoGkeSofSA4sbJrHGQi" target="_blank">buraya tıkla</a> ve açılınca tarayıcıda "Ana ekrana ekle" yap.
 </div>
-<div class="origin-warn hidden" id="voiceWarn" style="background:#FEF3C7;border-bottom-color:var(--amber);color:#78350F">
+<div class="origin-warn hidden" id="voiceWarn" style="background:#FEF3C7;border-bottom-color:var(--amber);color:#78350F;position:relative;padding-right:40px">
   🔈 Telefonunda gerçek bir <b>Arapça</b> ses motoru bulunamadı, bu yüzden harfler olması gerekenden farklı (ör. "a" yerine "e"ye yakın) çıkabiliyor. Düzeltmek için: Ayarlar → Diller ve Giriş → Metni Sese Çevirme (Text-to-Speech) → Google'a git → Arapça (ar) ses verisini indir, sonra sayfayı yenile.
+  <button onclick="dismissVoiceWarn()" aria-label="Kapat" style="position:absolute;top:6px;right:8px;background:none;border:none;font-size:20px;line-height:1;cursor:pointer;color:inherit;padding:4px 8px">✕</button>
 </div>
 
 <!-- HEADER -->
@@ -487,7 +488,10 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 <div id="view-league" class="view">
   <div class="sec-head">🏆 Ortak Sıralama</div>
   <p style="font-size:0.8rem;color:var(--fg2);margin-bottom:12px">Aynı linki açan herkes burada görünür — ailen, arkadaşların. Cihaz fark etmez!</p>
-  <button class="cont-btn amber" style="margin-bottom:12px" onclick="addGuestToLeague()">➕ Hesapsız Arkadaş Ekle</button>
+  <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+    <button class="cont-btn amber" style="flex:1;min-width:140px" onclick="addGuestToLeague()">➕ Hesapsız Arkadaş Ekle</button>
+    <button class="cont-btn" style="flex:1;min-width:140px;background:var(--surface);border:2px solid var(--border);color:var(--fg)" onclick="changeLeagueName()">✏️ İsmimi Değiştir</button>
+  </div>
   <div id="leagueStatus" style="font-size:0.8rem;color:var(--fg3);margin-bottom:10px"></div>
   <div id="leagueList"></div>
 </div>
@@ -712,12 +716,30 @@ function queueCloudSync(){
   if(_cloudTimer)clearTimeout(_cloudTimer);
   _cloudTimer=setTimeout(doCloudSync,1200);
 }
+// Lig'de gerçek isim yoksa (ör. varsayılan "Ben"), kullanıcıdan bir kere sor ve profile kaydet.
+function ensureLeagueName(prof){
+  if(prof.leagueName&&prof.leagueName.trim())return prof.leagueName.trim();
+  const suggestion=(prof.name&&prof.name!=='Ben'&&prof.name!=='Kızım')?prof.name:'';
+  const n=(prompt('🏆 Ortak sıralamada (Lig) görünecek adın ne olsun?\n(Herkes "Ben" yazarsa birbirinizi ayıramazsınız, gerçek bir ad/takma ad yaz)',suggestion)||'').trim();
+  prof.leagueName=n||('Oyuncu-'+Math.floor(Math.random()*9000+1000));
+  save();
+  return prof.leagueName;
+}
+function changeLeagueName(){
+  const prof=P();
+  const n=(prompt('🏆 Lig\'de görünecek yeni adın:',prof.leagueName||prof.name||'')||'').trim();
+  if(!n)return;
+  prof.leagueName=n;
+  save();
+  queueCloudSync();
+  if(document.getElementById('view-league').classList.contains('active'))subscribeLeague();
+}
 async function doCloudSync(){
   if(!SHEET_API_URL||SHEET_API_URL.indexOf('__')===0||!_myId)return;
   const prof=P();
   const lv=getLevel(prof.xp||0);
   await sheetPost({
-    action:'sync', id:_myId, name:prof.name||'Oyuncu',
+    action:'sync', id:_myId, name:(prof.leagueName&&prof.leagueName.trim())||prof.name||'Oyuncu',
     avatar:prof.avatar||'🐱', xp:prof.xp||0, streak:prof.streak||0,
     doneCount:(prof.done||[]).length, levelIcon:lv.icon, levelName:lv.name,
     profilesJson:JSON.stringify({profiles:PROFILES,activeIdx})
@@ -751,6 +773,10 @@ async function subscribeLeague(){
     listEl.innerHTML='';
     return;
   }
+  const prof=P();
+  const hadName=prof.leagueName&&prof.leagueName.trim();
+  ensureLeagueName(prof);
+  if(!hadName)queueCloudSync();
   async function refresh(){
     statusEl.textContent='Yükleniyor...';
     const r=await sheetGet({action:'list'});
@@ -2495,7 +2521,14 @@ function checkArabicVoice(){
   if(!voices.length)return; // henüz yüklenmedi, onvoiceschanged tekrar dener
   const hasAr=voices.some(v=>v.lang&&v.lang.toLowerCase().startsWith('ar'));
   const vw=document.getElementById('voiceWarn');
-  if(vw)vw.classList.toggle('hidden',hasAr);
+  let dismissed=false;
+  try{dismissed=localStorage.getItem('arapp5_voicewarn_dismissed')==='1'}catch(e){}
+  if(vw)vw.classList.toggle('hidden',hasAr||dismissed);
+}
+function dismissVoiceWarn(){
+  const vw=document.getElementById('voiceWarn');
+  if(vw)vw.classList.add('hidden');
+  try{localStorage.setItem('arapp5_voicewarn_dismissed','1')}catch(e){}
 }
 if(window.speechSynthesis){
   checkArabicVoice();
