@@ -437,6 +437,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <button class="nav-tab" onclick="showView('league')">🏆 Lig</button>
   <button class="nav-tab" onclick="showView('school')">📘 6. Sınıf</button>
   <button class="nav-tab" onclick="showView('grade7')">📗 7. Sınıf</button>
+  <button class="nav-tab" onclick="showView('workbook')">📝 Çalışma Kitabı</button>
 </nav>
 
 <main class="app-main">
@@ -510,6 +511,14 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <p style="font-size:0.8rem;color:var(--fg2);margin-bottom:4px">T.C. Millî Eğitim Bakanlığı "اللغة العربية للصف 7" ders kitabına uyumlu içerik.</p>
   <p style="font-size:0.72rem;color:var(--fg3);margin-bottom:14px">✅ Bu, gerçek 7. sınıf kitabıdır. 6 ünite, 17 ders — hepsi eklendi.</p>
   <div class="ch-list" id="grade7List"></div>
+</div>
+
+<!-- GRADE 7 WORKBOOK (ÇALIŞMA KİTABI) -->
+<div id="view-workbook" class="view">
+  <div class="sec-head">📝 7. Sınıf Çalışma Kitabı</div>
+  <p style="font-size:0.8rem;color:var(--fg2);margin-bottom:4px">Ders kitabındaki gerçek alıştırmalardan (tâmrinat) uyarlanmış pratik sorular.</p>
+  <p style="font-size:0.72rem;color:var(--fg3);margin-bottom:14px">✅ Ünite 1-2 (Meslekler, Alışveriş) eklendi. Diğer üniteler eklenecek.</p>
+  <div class="ch-list" id="workbookList"></div>
 </div>
 
 </main>
@@ -1790,6 +1799,191 @@ const GRADE7_CHAPTERS=[
   },
 ];
 
+const WORKBOOK_CHAPTERS=[
+  // ─── ÜNİTE 1: المِهَن (Meslekler) — Çalışma Kitabı ───
+  {id:'wb-u1d1',icon:'📝',color:'teal',title:'ÇK Ü1·Ders1: Mesleğin ne?',sub:'ما مِهْنَتُك؟ — kitaptaki alıştırma kelimeleri',
+    lessons:[
+      {type:'learn',title:'Meslek Kelimeleri',img:'greet',
+        content:{heading:'ما مِهْنَتُك؟',
+          text:'Çalışma kitabındaki 1. alıştırmanın meslek kelimeleri. Çiftler erkek/kadın şeklinde verilir: <b>"مُدير / مُديرة"</b> gibi.',
+          arabic:'مُدير · ماشِطة · حَلّاق · قُبْطان · مُتَقاعِد',ro:'mudîr · mâşita · hallâk · kubtân · mutekâid',tr:'Müdür · Kuaför · Berber · Kaptan · Emekli',
+          extra:'Kitaptaki alıştırmada resme bakıp "أم" (mi/mu) ile doğru mesleği seçiyorsun! 📝',
+          chips:[
+            {ar:'مُدير',name:'Müdür',sound:'mudîr',c:'teal'},
+            {ar:'ماشِطة',name:'Kuaför (kadın)',sound:'mâşita',c:'amber'},
+            {ar:'حَلّاق',name:'Berber',sound:'hallâk',c:'violet'},
+            {ar:'قُبْطان',name:'Kaptan (gemi)',sound:'kubtân',c:'rose'},
+            {ar:'مُتَقاعِد',name:'Emekli',sound:'mutekâid',c:'green'},
+          ],compare:null,
+        }
+      },
+      {type:'quiz',title:'Ders1 Alıştırmaları',questions:[
+        {ar:'مُدير',ro:'mudîr',q:'Bu kelimenin anlamı?',opts:['Müdür','Terzi','Polis','Kasap'],ans:0},
+        {ar:'ماشِطة',ro:'mâşita',q:'Bu kelimenin anlamı?',opts:['Doktor','Kuaför (kadın)','Hemşire','Satıcı'],ans:1},
+        {ar:'حَلّاق',ro:'hallâk',q:'Bu kelimenin anlamı?',opts:['Berber','Pilot','Kaptan','İşçi'],ans:0},
+        {ar:'خَيّاط',ro:'hayyât',q:'Bu kelimenin anlamı?',opts:['Terzi','Aşçı','Çiftçi','Hostes'],ans:0},
+        {ar:'قُبْطان',ro:'kubtân',q:'Bu kelimenin anlamı?',opts:['Pilot','Şoför','Kaptan (gemi)','Polis'],ans:2},
+        {ar:'رَبّة البَيْت',ro:'rabbetü l-beyt',q:'Bu kelimenin anlamı?',opts:['Öğretmen','Hemşire','Ev hanımı','Satıcı'],ans:2},
+        {ar:'مُتَقاعِد',ro:'mutekâid',q:'Bu kelimenin anlamı?',opts:['Emekli','Öğrenci','İşçi','Müdür'],ans:0},
+        {ar:'ما مِهْنَتُك؟',ro:'mā mihnetuk?',q:'Bu cümlenin anlamı (kitap s.10)?',opts:['Adın ne?','Mesleğin ne?','Nerelisin?','Kaç yaşındasın?'],ans:1},
+        {ar:'ما مِهْنة والِدِك، خَيّاط أم طَيّار؟ والِدي خَيّاط.',ro:'mā mihnet vâlidik, hayyât am tayyâr? vâlidî hayyât',q:'Kitaptaki alıştırmaya göre (s.23) bu cümlenin anlamı?',opts:['Baban terzi mi pilot mu? Babam pilot.','Baban terzi mi pilot mu? Babam terzi.','Baban kaptan mı pilot mu? Babam kaptan.','Annen terzi mi? Evet.'],ans:1},
+        {ar:'هذا جَدّي، وهو مُتَقاعِد.',ro:'hâzâ ceddî, ve huve mutekâid',q:'Bu cümlenin anlamı (kitap s.11 diyaloğu)?',opts:['Bu dedem, o berber.','Bu amcam, o emekli.','Bu dedem, o emekli.','Bu babam, o müdür.'],ans:2},
+      ]}
+    ]
+  },
+  {id:'wb-u1d2',icon:'👩‍🏫',color:'amber',title:'ÇK Ü1·Ders2: Öğretmenim',sub:'مُدَرِّسي — branş öğretmenleri (kitap alıştırmaları)',
+    lessons:[
+      {type:'learn',title:'Branş Öğretmenleri',img:'school',
+        content:{heading:'مُدَرِّسي',
+          text:'Çalışma kitabındaki 1. alıştırmanın branş öğretmeni kelimeleri (s.24).',
+          arabic:'مُعَلِّم الرِّياضة · مُعَلِّمة الرَّسْم · غُرْفة المُعَلِّمين',ro:'muallimu r-riyâda · muallimetu r-resm · gurfetu l-muallimîn',tr:'Beden eğitimi öğretmeni · Resim öğretmeni (kadın) · Öğretmenler odası',
+          extra:'Kitaptaki kalıp: "سَأَتَعَلَّم [ders] من مُعَلِّم [ders]" — "[dersi] [ders] öğretmeninden öğreneceğim." 📖',
+          chips:[
+            {ar:'مُعَلِّم الرِّياضة',name:'Beden eğitimi öğretmeni',sound:'muallimu r-riyâda',c:'teal'},
+            {ar:'مُعَلِّمة الرَّسْم',name:'Resim öğretmeni (kadın)',sound:'muallimetu r-resm',c:'amber'},
+            {ar:'مُعَلِّمة التاريخ',name:'Tarih öğretmeni (kadın)',sound:'muallimetu t-târîh',c:'violet'},
+            {ar:'مُعَلِّم الجُغْرافْيا',name:'Coğrafya öğretmeni',sound:'muallimu l-cugrâfyâ',c:'rose'},
+            {ar:'غُرْفة المُعَلِّمين',name:'Öğretmenler odası',sound:'gurfetu l-muallimîn',c:'green'},
+          ],compare:null,
+        }
+      },
+      {type:'quiz',title:'Ders2 Alıştırmaları',questions:[
+        {ar:'مُعَلِّم الرِّياضة',ro:'muallimu r-riyâda',q:'Bu kelimenin anlamı?',opts:['Beden eğitimi öğretmeni','Matematik öğretmeni','Müzik öğretmeni','Fen öğretmeni'],ans:0},
+        {ar:'مُعَلِّمة الرِّياضِيّات',ro:'muallimetu r-riyâdiyyât',q:'Bu kelimenin anlamı?',opts:['Tarih öğretmeni','Matematik öğretmeni (kadın)','Resim öğretmeni','Coğrafya öğretmeni'],ans:1},
+        {ar:'مُعَلِّم اللّغة العَرَبِيّة',ro:'muallimu l-luga l-arabiyya',q:'Bu kelimenin anlamı?',opts:['Arapça öğretmeni','Türkçe öğretmeni','İngilizce öğretmeni','Fen öğretmeni'],ans:0},
+        {ar:'مُعَلِّمة الرَّسْم',ro:'muallimetu r-resm',q:'Bu kelimenin anlamı?',opts:['Müzik öğretmeni','Resim öğretmeni (kadın)','Tarih öğretmeni','Fen öğretmeni'],ans:1},
+        {ar:'مُعَلِّمة التاريخ',ro:'muallimetu t-târîh',q:'Bu kelimenin anlamı?',opts:['Tarih öğretmeni (kadın)','Coğrafya öğretmeni','Müzik öğretmeni','Resim öğretmeni'],ans:0},
+        {ar:'مُعَلِّم الجُغْرافْيا',ro:'muallimu l-cugrâfyâ',q:'Bu kelimenin anlamı?',opts:['Fen öğretmeni','Tarih öğretmeni','Coğrafya öğretmeni','Matematik öğretmeni'],ans:2},
+        {ar:'غُرْفة المُعَلِّمين',ro:'gurfetu l-muallimîn',q:'Bu kelimenin anlamı?',opts:['Sınıf','Öğretmenler odası','Müdür odası','Kütüphane'],ans:1},
+        {ar:'مُعَلِّمة العُلوم',ro:'muallimetu l-ulûm',q:'Bu kelimenin anlamı?',opts:['Fen öğretmeni (kadın)','Tarih öğretmeni','Resim öğretmeni','Müzik öğretmeni'],ans:0},
+        {ar:'مُعَلِّمة الموسيقى',ro:'muallimetu l-mûsîkâ',q:'Bu kelimenin anlamı?',opts:['Resim öğretmeni','Müzik öğretmeni (kadın)','Fen öğretmeni','Beden eğitimi öğretmeni'],ans:1},
+        {ar:'سَأَتَعَلَّم التّاريخ في مادّة التاريخ من مُعَلِّم التاريخ.',ro:'seeteallemu t-târîh fî mâddeti t-târîh min muallimi t-târîh',q:'Bu cümlenin anlamı (kitap s.26 kalıp cümlesi)?',opts:['Coğrafyayı coğrafya öğretmeninden öğreneceğim.','Tarihi, tarih dersinde tarih öğretmeninden öğreneceğim.','Matematiği matematik öğretmeninden öğrendim.','Resmi resim öğretmeninden öğreniyorum.'],ans:1},
+      ]}
+    ]
+  },
+  {id:'wb-u1d3',icon:'🚀',color:'violet',title:'ÇK Ü1·Ders3: Hayalim',sub:'خَيالي — hayal mesleklerim (kitap alıştırmaları)',
+    lessons:[
+      {type:'learn',title:'Hayalimdeki Meslekler',img:'greet',
+        content:{heading:'خَيالي',
+          text:'Çalışma kitabındaki 1. alıştırmanın ileri düzey meslek kelimeleri (s.33).',
+          arabic:'بَيْطَرِيّ · طَبيبة الأَسْنان · مُهَنْدِس · رائِدة الفَضاء',ro:'baytarî · tabîbetu l-esnân · muhendis · râidetu l-fadâ',tr:'Veteriner · Diş hekimi (kadın) · Mühendis · Astronot (kadın)',
+          extra:'Kitapta "خَمِّنْ حُلْمي" (Hayalimi Tahmin Et) adlı bir oyun oynanıyor — arkadaşın mesleği tarif ediyor, sen tahmin ediyorsun! 🚀',
+          chips:[
+            {ar:'بَيْطَرِيّ',name:'Veteriner',sound:'baytarî',c:'teal'},
+            {ar:'مُهَنْدِس',name:'Mühendis',sound:'muhendis',c:'amber'},
+            {ar:'مُحامِية',name:'Avukat (kadın)',sound:'muhâmiye',c:'violet'},
+            {ar:'صَيْدَلانِيّ',name:'Eczacı',sound:'saydalânî',c:'rose'},
+            {ar:'رائِدة الفَضاء',name:'Astronot (kadın)',sound:'râidetu l-fadâ',c:'green'},
+          ],compare:null,
+        }
+      },
+      {type:'quiz',title:'Ders3 Alıştırmaları',questions:[
+        {ar:'بَيْطَرِيّ',ro:'baytarî',q:'Bu kelimenin anlamı?',opts:['Diş hekimi','Veteriner','Eczacı','Mühendis'],ans:1},
+        {ar:'طَبيبة الأَسْنان',ro:'tabîbetu l-esnân',q:'Bu kelimenin anlamı?',opts:['Diş hekimi (kadın)','Veteriner (kadın)','Hemşire','Eczacı (kadın)'],ans:0},
+        {ar:'مُهَنْدِس',ro:'muhendis',q:'Bu kelimenin anlamı?',opts:['Mimar','Mühendis','Programcı','Gazeteci'],ans:1},
+        {ar:'مُبَرْمِج الكُمْبيوتَر',ro:'muberrimu l-kumbiyûter',q:'Bu kelimenin anlamı?',opts:['Bilgisayar programcısı','Bilgisayar tamircisi','Gazeteci','Mühendis'],ans:0},
+        {ar:'مُحامِية',ro:'muhâmiye',q:'Bu kelimenin anlamı?',opts:['Hâkim (kadın)','Avukat (kadın)','Doktor (kadın)','Öğretmen'],ans:1},
+        {ar:'صَيْدَلانِيّ',ro:'saydalânî',q:'Bu kelimenin anlamı?',opts:['Eczacı','Doktor','Hemşire','Veteriner'],ans:0},
+        {ar:'مِعْمارِيّة',ro:'mi\'mâriyye',q:'Bu kelimenin anlamı?',opts:['Mühendis (kadın)','Mimar (kadın)','Ressam','Programcı (kadın)'],ans:1},
+        {ar:'رائِدة الفَضاء',ro:'râidetu l-fadâ',q:'Bu kelimenin anlamı?',opts:['Pilot (kadın)','Hostes','Astronot (kadın)','Gazeteci'],ans:2},
+        {ar:'البَيْطَرِيّ يُعالِج الحَيَوانات المَريضة.',ro:'el-baytarî yuâlicu l-hayevânâti l-marîda',q:'Bu cümlenin anlamı (kitap s.38 hata-düzeltme alıştırması)?',opts:['Veteriner hasta hayvanları tedavi eder.','Doktor hasta insanları tedavi eder.','Eczacı ilaç hazırlar.','Veteriner binalar tasarlar.'],ans:0},
+        {ar:'هو يُصَمِّم المَباني.',ro:'huve yusemmimu l-mebânî',q:'Bu cümle hangi mesleği tarif ediyor (kitap s.39)?',opts:['Mühendis','Mimar (مِعْماريّ)','Programcı','Eczacı'],ans:1},
+      ]}
+    ]
+  },
+  // ─── ÜNİTE 2: التَّسَوُّق (Alışveriş) — Çalışma Kitabı ───
+  {id:'wb-u2d1',icon:'🛒',color:'teal',title:'ÇK Ü2·Ders1: Bakkalda',sub:'في البَقّالة — kitap alıştırma kelimeleri',
+    lessons:[
+      {type:'learn',title:'Bakkal Kelimeleri',img:'house',
+        content:{heading:'في البَقّالة',
+          text:'Çalışma kitabındaki 1. alıştırmanın bakkal/market kelimeleri (s.46).',
+          arabic:'بَيْض · عَسَل · جُبن · حَليب · زَيْتون',ro:'bayd · asel · cubn · halîb · zeytûn',tr:'Yumurta · Bal · Peynir · Süt · Zeytin',
+          extra:'Kalıp cümle: "أنا بِحاجة إلى..." — "...ye ihtiyacım var." 🛒',
+          chips:[
+            {ar:'بَيْض',name:'Yumurta',sound:'bayd',c:'teal'},
+            {ar:'عَسَل',name:'Bal',sound:'asel',c:'amber'},
+            {ar:'جُبن',name:'Peynir',sound:'cubn',c:'violet'},
+            {ar:'حَليب',name:'Süt',sound:'halîb',c:'rose'},
+            {ar:'زَيْتون',name:'Zeytin',sound:'zeytûn',c:'green'},
+          ],compare:null,
+        }
+      },
+      {type:'quiz',title:'Ders1 Alıştırmaları',questions:[
+        {ar:'بَيْض',ro:'bayd',q:'Bu kelimenin anlamı?',opts:['Yumurta','Süt','Peynir','Bal'],ans:0},
+        {ar:'عَسَل',ro:'asel',q:'Bu kelimenin anlamı?',opts:['Şeker','Bal','Çay','Un'],ans:1},
+        {ar:'جُبن',ro:'cubn',q:'Bu kelimenin anlamı?',opts:['Peynir','Zeytin','Ekmek','Çikolata'],ans:0},
+        {ar:'حَليب',ro:'halîb',q:'Bu kelimenin anlamı?',opts:['Meyve suyu','Süt','Çay','Dondurma'],ans:1},
+        {ar:'زَيْتون',ro:'zeytûn',q:'Bu kelimenin anlamı?',opts:['Zeytin','Un','Şeker','Yumurta'],ans:0},
+        {ar:'أنا بِحاجة إلى عُلْبة من الحَليب.',ro:'ene bihâce ilâ ulbetin mine l-halîb',q:'Bu cümlenin anlamı (kitap s.48)?',opts:['Bir paket şekere ihtiyacım var.','Bir kutu süte ihtiyacım var.','Bir kutu çikolataya ihtiyacım var.','Bir kutu bala ihtiyacım var.'],ans:1},
+        {ar:'بِكَم هذا الآيس كريم؟ هذا الآيس كريم بِسَبْع ليرات.',ro:'bikem hâzâ l-âys krîm? hâzâ l-âys krîm bi-seb\'i lîrât',q:'Bu diyaloğun anlamı?',opts:['Bu dondurma kaça? Bu dondurma 7 liraya.','Bu çikolata kaça? 7 liraya.','Bu süt kaça? 5 liraya.','Bu bal kaça? 7 liraya.'],ans:0},
+        {ar:'أَتُفَضِّلُ الشّوكولاتة أَم الآيس كريم؟ أُفَضِّلُ الشّوكولاتة.',ro:'etüfeddilu ş-şûkûlâte em el-âys krîm? ufeddilu ş-şûkûlâte',q:'Bu diyaloğun anlamı?',opts:['Çay mı süt mü tercih edersin? Sütü tercih ederim.','Çikolata mı dondurma mı tercih edersin? Çikolatayı tercih ederim.','Bal mı şeker mi tercih edersin? Balı tercih ederim.','Zeytin mi peynir mi tercih edersin? Peyniri tercih ederim.'],ans:1},
+        {ar:'ما هذا؟ هذا عَسَل.',ro:'mâ hâzâ? hâzâ asel',q:'Kitaptaki öz-değerlendirme testine göre (s.90) bu resmin cevabı: "Bu nedir?" sorusunun cevabı nedir?',opts:['Bu çay.','Bu bal.','Bu un.','Bu süt.'],ans:1},
+        {ar:'ماذا تَشْتَري عائِشة من البَقّال؟ تَشْتَري الخُبْز.',ro:'mâzâ teşterî âişe mine l-bakkâl? teşterî l-hubz',q:'Bu diyaloğun anlamı (kitap s.91 testi)?',opts:['Ayşe bakkaldan ne alıyor? Yumurta alıyor.','Ayşe bakkaldan ne alıyor? Ekmek alıyor.','Ayşe bakkaldan ne alıyor? Peynir alıyor.','Ayşe bakkaldan ne alıyor? Un alıyor.'],ans:1},
+      ]}
+    ]
+  },
+  {id:'wb-u2d2',icon:'✏️',color:'amber',title:'ÇK Ü2·Ders2: Kırtasiyede',sub:'في القِرْطاسِيّة — kitap alıştırma kelimeleri',
+    lessons:[
+      {type:'learn',title:'Kırtasiye Kelimeleri',img:'school',
+        content:{heading:'في القِرْطاسِيّة',
+          text:'Çalışma kitabındaki 1. alıştırmanın kırtasiye malzemeleri (s.62).',
+          arabic:'قَلَم رَصاص · دَفْتَر · مِمْحاة · مِقَصّ',ro:'kalem rasâs · defter · mimhâ · mikass',tr:'Kurşun kalem · Defter · Silgi · Makas',
+          extra:'Kalıp: "عِنْدي..." (Bende var) ve "بِكَم...؟" (...kaça?) kalıplarıyla alışveriş pratiği yapılıyor. ✏️',
+          chips:[
+            {ar:'قَلَم رَصاص',name:'Kurşun kalem',sound:'kalem rasâs',c:'teal'},
+            {ar:'مِمْحاة',name:'Silgi',sound:'mimhâ',c:'amber'},
+            {ar:'مِقَصّ',name:'Makas',sound:'mikass',c:'violet'},
+            {ar:'مَلَفّ',name:'Dosya/Klasör',sound:'melef',c:'rose'},
+            {ar:'دَبّاسة الوَرَق',name:'Zımba',sound:'debbâsetu l-varak',c:'green'},
+          ],compare:null,
+        }
+      },
+      {type:'quiz',title:'Ders2 Alıştırmaları',questions:[
+        {ar:'قَلَم رَصاص',ro:'kalem rasâs',q:'Bu kelimenin anlamı?',opts:['Kurşun kalem','Tükenmez kalem','Boya kalemi','Silgi'],ans:0},
+        {ar:'دَفْتَر',ro:'defter',q:'Bu kelimenin anlamı?',opts:['Çanta','Defter','Dosya','Kalem'],ans:1},
+        {ar:'مِمْحاة',ro:'mimhâ',q:'Bu kelimenin anlamı?',opts:['Kalemtıraş','Silgi','Makas','Zımba'],ans:1},
+        {ar:'مِقَصّ',ro:'mikass',q:'Bu kelimenin anlamı?',opts:['Makas','Delgeç','Zımba','Cetvel'],ans:0},
+        {ar:'مَلَفّ',ro:'melef',q:'Bu kelimenin anlamı?',opts:['Defter','Dosya/Klasör','Çanta','Silgi'],ans:1},
+        {ar:'دَبّاسة الوَرَق',ro:'debbâsetu l-varak',q:'Bu kelimenin anlamı?',opts:['Zımba','Delgeç','Makas','Kalemtıraş'],ans:0},
+        {ar:'ثَقّابة الوَرَق',ro:'sakkâbetu l-varak',q:'Bu kelimenin anlamı?',opts:['Zımba','Delgeç','Cetvel','Silgi'],ans:1},
+        {ar:'أُريد دَفْتَر الرَّسْم وأَقْلامًا مُلَوَّنةً.',ro:'urîdu deftera r-resmi ve aklâmen muleweneten',q:'Bu cümlenin anlamı (kitap s.63)?',opts:['Resim defteri ve boyalı kalemler istiyorum.','Kurşun kalem ve silgi istiyorum.','Bir dosya ve makas istiyorum.','Bir çanta ve defter istiyorum.'],ans:0},
+        {ar:'هَلْ هذه أَلْوان مائِيّة؟ لا، هذه أَقْلام مُلَوَّنة.',ro:'hel hâzihi elvân mâiyye? lâ, hâzihi aklâm muleweneh',q:'Bu diyaloğun anlamı (kitap s.91 testi)?',opts:['Bu bir silgi mi? Hayır, bu bir kalemtıraş.','Bunlar sulu boya mı? Hayır, bunlar boyalı kalemler.','Bu bir defter mi? Hayır, bu bir dosya.','Bu bir makas mı? Hayır, bu bir zımba.'],ans:1},
+        {ar:'ما هذه؟ هذه مِبْراة.',ro:'mâ hâzihi? hâzihi mibrâh',q:'Bu diyaloğun anlamı (kitap s.91 testi)?',opts:['Bu nedir? Bu bir silgi.','Bu nedir? Bu bir kalemtıraş.','Bu nedir? Bu bir dosya.','Bu nedir? Bu bir çanta.'],ans:1},
+      ]}
+    ]
+  },
+  {id:'wb-u2d3',icon:'🍓',color:'rose',title:'ÇK Ü2·Ders3: Halk Pazarında',sub:'في السّوق الشَّعْبي — kitap alıştırma kelimeleri',
+    lessons:[
+      {type:'learn',title:'Meyve ve Sebze Kelimeleri',img:'house',
+        content:{heading:'في السّوق الشَّعْبِيّ',
+          text:'Çalışma kitabındaki 1. alıştırmanın meyve/sebze kelimeleri (s.77).',
+          arabic:'باذِنْجان · طَماطِم · بِطّيخ · فَراوِلة',ro:'bâzincân · tamâtim · bittîh · ferâvile',tr:'Patlıcan · Domates · Karpuz · Çilek',
+          extra:'Kalıp: "أَتُفَضِّلُ... أَم...؟" — "...mi yoksa...mi tercih edersin?" 🍓',
+          chips:[
+            {ar:'باذِنْجان',name:'Patlıcan',sound:'bâzincân',c:'teal'},
+            {ar:'طَماطِم',name:'Domates',sound:'tamâtim',c:'amber'},
+            {ar:'بِطّيخ',name:'Karpuz',sound:'bittîh',c:'violet'},
+            {ar:'مِشْمِش',name:'Kayısı',sound:'mişmiş',c:'rose'},
+            {ar:'فَراوِلة',name:'Çilek',sound:'ferâvile',c:'green'},
+          ],compare:null,
+        }
+      },
+      {type:'quiz',title:'Ders3 Alıştırmaları',questions:[
+        {ar:'باذِنْجان',ro:'bâzincân',q:'Bu kelimenin anlamı?',opts:['Patlıcan','Kabak','Biber','Domates'],ans:0},
+        {ar:'طَماطِم',ro:'tamâtim',q:'Bu kelimenin anlamı?',opts:['Domates','Salatalık','Patlıcan','Biber'],ans:0},
+        {ar:'بِطّيخ',ro:'bittîh',q:'Bu kelimenin anlamı?',opts:['Kavun','Karpuz','Çilek','Kiraz'],ans:1},
+        {ar:'مِشْمِش',ro:'mişmiş',q:'Bu kelimenin anlamı?',opts:['Kayısı','Kiraz','Çilek','Karpuz'],ans:0},
+        {ar:'كَرَز',ro:'kerez',q:'Bu kelimenin anlamı?',opts:['Kiraz','Kayısı','Çilek','Kavun'],ans:0},
+        {ar:'فَراوِلة',ro:'ferâvile',q:'Bu kelimenin anlamı?',opts:['Kiraz','Kayısı','Çilek','Karpuz'],ans:2},
+        {ar:'نَعْناع',ro:'na\'nâ',q:'Bu kelimenin anlamı?',opts:['Nane','Maydanoz','Biber','Fasulye'],ans:0},
+        {ar:'بَقْدونِس',ro:'bakdûnis',q:'Bu kelimenin anlamı?',opts:['Nane','Maydanoz','Kabak','Fasulye'],ans:1},
+        {ar:'أَتُفَضِّلين الكَرَز أَم المِشْمِش؟ أُفَضِّلُ المِشْمِش.',ro:'etüfeddilîne l-kereze em el-mişmiş? ufeddilu l-mişmiş',q:'Bu diyaloğun anlamı (kitap s.78)?',opts:['Kirazı mı kayısıyı mı tercih edersin? Kayısıyı tercih ederim.','Çileği mi kirazı mı tercih edersin? Çileği tercih ederim.','Karpuzu mu kavunu mu tercih edersin? Kavunu tercih ederim.','Patlıcanı mı domatesi mi tercih edersin? Domatesi tercih ederim.'],ans:1},
+        {ar:'بِكَم هذه الكوسة؟ هذه الكوسة خَمْس عَشْرة ليرة.',ro:'bikem hâzihi l-kûse? hâzihi l-kûse hamse aşrete lîreh',q:'Bu diyaloğun anlamı (kitap s.90 testi)?',opts:['Bu kabak kaça? Bu kabak 15 liraya.','Bu patlıcan kaça? 15 liraya.','Bu domates kaça? 15 liraya.','Bu karpuz kaça? 15 liraya.'],ans:0},
+      ]}
+    ]
+  },
+];
+
 // SVG görseller
 const SVGS={
   med:`<svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="140" rx="12" fill="#D4F5F4"/><text x="100" y="75" text-anchor="middle" font-family="serif" font-size="56" fill="#0EA5A0" direction="rtl">بَا·بُو·بِي</text><text x="100" y="115" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0D9488">Uzun sesler: bā · bū · bī</text></svg>`,
@@ -2192,6 +2386,9 @@ function renderSchoolList(){
 function renderGrade7List(){
   document.getElementById('grade7List').innerHTML=GRADE7_CHAPTERS.map((c,i)=>schCardHTML(c,i,GRADE7_CHAPTERS,'7. Sınıf')).join('');
 }
+function renderWorkbookList(){
+  document.getElementById('workbookList').innerHTML=WORKBOOK_CHAPTERS.map((c,i)=>schCardHTML(c,i,WORKBOOK_CHAPTERS,'Çalışma Kitabı')).join('');
+}
 function updateHero(){
   const next=CHAPTERS.find(c=>!P().done.includes(c.id))||CHAPTERS[0];
   document.getElementById('heroTitle').textContent=next.title;
@@ -2270,7 +2467,7 @@ function renderPlan(){
 let curCh=null,lsnIdx=0,qIdx=0,answers=[],fbDone=false;
 
 function openChapter(id){
-  curCh=CHAPTERS.find(c=>c.id===id)||SCHOOL_CHAPTERS.find(c=>c.id===id)||GRADE7_CHAPTERS.find(c=>c.id===id);
+  curCh=CHAPTERS.find(c=>c.id===id)||SCHOOL_CHAPTERS.find(c=>c.id===id)||GRADE7_CHAPTERS.find(c=>c.id===id)||WORKBOOK_CHAPTERS.find(c=>c.id===id);
   lsnIdx=0;qIdx=0;answers=[];fbDone=false;
   showView('lesson');renderLesson();
 }
@@ -2486,7 +2683,7 @@ function showView(name){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('view-'+name).classList.add('active');
-  const map={home:0,harfler:1,words:2,plan:3,league:4,school:5,grade7:6};
+  const map={home:0,harfler:1,words:2,plan:3,league:4,school:5,grade7:6,workbook:7};
   const tabs=document.querySelectorAll('.nav-tab');
   if(map[name]!==undefined)tabs[map[name]].classList.add('active');
   if(name==='words')renderWords();
@@ -2496,6 +2693,7 @@ function showView(name){
   if(name==='league')subscribeLeague();
   if(name==='school')renderSchoolList();
   if(name==='grade7')renderGrade7List();
+  if(name==='workbook')renderWorkbookList();
 }
 function renderHomeAll(){
   renderStreak();renderMascot('home');renderXpBar();
