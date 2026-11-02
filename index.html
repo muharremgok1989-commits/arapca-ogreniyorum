@@ -517,7 +517,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 <div id="view-workbook" class="view">
   <div class="sec-head">📝 7. Sınıf Çalışma Kitabı</div>
   <p style="font-size:0.8rem;color:var(--fg2);margin-bottom:4px">Ders kitabındaki gerçek alıştırmalardan (tâmrinat) uyarlanmış pratik sorular.</p>
-  <p style="font-size:0.72rem;color:var(--fg3);margin-bottom:14px">✅ Ünite 1-2 (Meslekler, Alışveriş) eklendi. Diğer üniteler eklenecek.</p>
+  <p style="font-size:0.72rem;color:var(--fg3);margin-bottom:14px">✅ 6 ünite, 16 ders — hepsi eklendi.</p>
   <div class="ch-list" id="workbookList"></div>
 </div>
 
@@ -1979,6 +1979,306 @@ const WORKBOOK_CHAPTERS=[
         {ar:'بَقْدونِس',ro:'bakdûnis',q:'Bu kelimenin anlamı?',opts:['Nane','Maydanoz','Kabak','Fasulye'],ans:1},
         {ar:'أَتُفَضِّلين الكَرَز أَم المِشْمِش؟ أُفَضِّلُ المِشْمِش.',ro:'etüfeddilîne l-kereze em el-mişmiş? ufeddilu l-mişmiş',q:'Bu diyaloğun anlamı (kitap s.78)?',opts:['Kirazı mı kayısıyı mı tercih edersin? Kayısıyı tercih ederim.','Çileği mi kirazı mı tercih edersin? Çileği tercih ederim.','Karpuzu mu kavunu mu tercih edersin? Kavunu tercih ederim.','Patlıcanı mı domatesi mi tercih edersin? Domatesi tercih ederim.'],ans:1},
         {ar:'بِكَم هذه الكوسة؟ هذه الكوسة خَمْس عَشْرة ليرة.',ro:'bikem hâzihi l-kûse? hâzihi l-kûse hamse aşrete lîreh',q:'Bu diyaloğun anlamı (kitap s.90 testi)?',opts:['Bu kabak kaça? Bu kabak 15 liraya.','Bu patlıcan kaça? 15 liraya.','Bu domates kaça? 15 liraya.','Bu karpuz kaça? 15 liraya.'],ans:0},
+      ]}
+    ]
+  },
+// ─── ÜNİTE 3 (devam) + ÜNİTE 4: وَطَني (Vatanım) — Çalışma Kitabı ───
+  {id:'wb-u3d3',icon:'📝',color:'amber',title:'ÇK Ü3·Ders3: Hava Güneşli',sub:'الجَوّ مُشْمِس — kitaptaki alıştırma kelimeleri (s.125-134)',
+    lessons:[
+      {type:'learn',title:'Yaz Tatili Kelimeleri',img:'house',
+        content:{heading:'الجَوّ مُشْمِس',
+          text:'Kitaptaki röportaj diyaloğunda (s.126-127) bir muhabir, Antalya\'da tatildeki bir aileyle konuşuyor.',
+          arabic:'الجَوّ مُشْمِس · أُحِبّ السِّباحة · القَلْعة الرَّمْلِيّة · عُطْلة سَعيدة',ro:'el-cevv muşmis · uhibbu s-sibaha · el-kal\'a er-remliyye · utla seîda',tr:'Hava güneşli · Yüzmeyi severim · Kum kalesi · İyi tatiller',
+          extra:'Kitapta Tarık, tatilini sahilde yüzüp kum kalesi yaparak geçiriyor! 🏖️',
+          chips:[
+            {ar:'الجَوّ مُشْمِس',name:'Hava güneşli',sound:'el-cevv muşmis',c:'amber'},
+            {ar:'شاطِئ البَحْر',name:'Deniz sahili',sound:'şâtiu l-bahr',c:'teal'},
+            {ar:'يَسْبَح',name:'Yüzer',sound:'yesbah',c:'violet'},
+            {ar:'القَلْعة الرَّمْلِيّة',name:'Kum kalesi',sound:'el-kal\'a er-remliyye',c:'rose'},
+            {ar:'العُطْلة',name:'Tatil',sound:'el-utla',c:'green'},
+          ],compare:null,
+        }
+      },
+      {type:'quiz',title:'Hava Güneşli Alıştırmaları',questions:[
+        {ar:'كَيْف الجَوّ اليَوْم؟',ro:'keyfe l-cevv el-yevm?',q:'Kitaptaki "اختبر نفسك" testi (s.133), soru 1 — resimde yağmur var, doğru cevap hangisi?',opts:['الجَوّ غائِم (Hava bulutlu)','الجَوّ عاصِف (Hava fırtınalı)','الجَوّ مُشْمِس (Hava güneşli)','الجَوّ مُمْطِر (Hava yağmurlu)'],ans:3},
+        {ar:'هَل الجَوّ ضَبابِيّ اليَوْم؟',ro:'hel el-cevv dabâbiyy el-yevm?',q:'Resimde sisli bir orman var (s.133, soru 4) — doğru cevap?',opts:['نَعَم، الجَوّ ضَبابِيّ (Evet, hava sisli)','لا، الجَوّ ضَبابِيّ','نَعَم، الجَوّ مُثْلِج','لا، الجَوّ مُثْلِج'],ans:0},
+        {ar:'ماذا تَلْبَس في فَصْل الشِّتاء؟',ro:'mâzâ telbes fî fasli ş-şitâ?',q:'Kışın ne giyersin? (s.134, soru 7 — resimde kaban var)',opts:['تَلْبَس القَميص (Gömlek giyersin)','تَلْبَس المِعْطَف (Kaban giyersin)','أَلْبَس القَميص','أَلْبَس المِعْطَف'],ans:1},
+        {ar:'كَيْف الجَوّ اليَوْم؟',ro:'keyfe l-cevv el-yevm?',q:'s.134 soru 8 — resimde güneş var, doğru cevap?',opts:['الجَوّ مُثْلِج','الجَوّ مُشْمِس (Hava güneşli)','الجَوّ ضَبابِيّ','الجَوّ صافي'],ans:1},
+        {ar:'لِماذا يَشْعُر بِالسُّرور في أَيّام العُطْلة؟',ro:'limâzâ yeş\'ur bi-s-surûr fî eyyâmi l-utla?',q:'Ahmed tatil günlerinde neden mutlu? (s.134, soru 9 — resimde kum kalesi yapıyor)',opts:['Çünkü denizde yüzüyor','Çünkü sahilde kum kalesi yapıyor','Çünkü tarihi yerleri ziyaret ediyor','Çünkü dalgalara biniyor'],ans:1},
+        {ar:'أَيْن سَيَذْهَب خَليل وعائِلَته؟',ro:'eyne seyezhebu halîl ve âiletuh?',q:'Diyaloğa göre (s.127) Halil ve ailesi tatillerini nerede geçiriyor?',opts:['İstanbul\'da','Antalya\'da','İzmir\'de','Ankara\'da'],ans:1},
+        {ar:'ماذا يَفْعَل طارِق في العُطْلة؟',ro:'mâzâ yef\'al târık fî l-utla?',q:'Diyaloğa göre (s.127) Tarık tatilde ne yapıyor?',opts:['Sadece okuyor','Denizde yüzüyor ve kum kalesi yapıyor','Dağda yürüyüş yapıyor','Market alışverişi yapıyor'],ans:1},
+        {ar:'لِماذا يُفَضِّل السُّيّاح أَنْطالْيا لِقَضاء العُطْلة؟',ro:'limâzâ yufaddilu s-suyyâh entâlya li-kadâi l-utla?',q:'Diyaloğa göre (s.126) turistler tatillerini neden Antalya\'da geçirmeyi tercih ediyor?',opts:['Çünkü ucuz','Çünkü havası güneşli, denizi sıcak ve sahili çok güzel','Çünkü tarihi yerleri az','Çünkü kalabalık değil'],ans:1},
+        {ar:'دَرَجَة الحَرارة مُرْتَفِعة جِدًّا، لِذَلِك...',ro:'deraceu l-harâra murtefi\'a ciddâ, lizâlike...',q:'Eşleştirme alıştırmasına göre (s.126): "Sıcaklık çok yüksek, bu yüzden..." cümlesinin devamı hangisi?',opts:['...tatilini orada geçirecek','...yüzmeyi sever','...Pazar günü İzmir\'e gidecek','...soğuktan şikayet ediyor'],ans:1},
+        {ar:'ما اسْمُك؟ — اسْمي طارِق.',ro:'mâ-smuk? — ismî târık',q:'Diyalogdaki muhabirin sorusuna (s.127) Tarık nasıl cevap verir?',opts:['Adım Tarık','Yaşım 12','Antalyalıyım','İyiyim'],ans:0},
+      ]}
+    ]
+  },
+  {id:'wb-u4d1',icon:'🕌',color:'teal',title:'ÇK Ü4·Ders1: Tarihi Mekanlar',sub:'الأَماكِن التّاريخيّة — kitaptaki eşleştirme alıştırmaları (s.136-148)',
+    lessons:[
+      {type:'learn',title:'Türkiye\'nin Tarihi Yerleri',img:'house',
+        content:{heading:'الأَماكِن التّاريخيّة',
+          text:'Kitapta Türkiye\'nin ünlü tarihi mekanları, hangi şehirde olduklarıyla birlikte tanıtılıyor: <b>"[mekan] في [şehir]."</b>',
+          arabic:'مَسْجِد آياصوفْيا · باموق قَلْعة · جَبَل النَّمرود · قَلْعة البِنْت',ro:'mescid âyâsûfyâ · bâmûk kal\'a · cebelu n-nemrûd · kal\'atu l-bint',tr:'Ayasofya Camii · Pamukkale · Nemrut Dağı · Kız Kalesi',
+          extra:'Kitapta Türkiye haritası üzerinde 9 tarihi mekan ve hangi şehirde oldukları eşleştiriliyor! 🗺️',
+          chips:[
+            {ar:'مَسْجِد آياصوفْيا',name:'Ayasofya Camii (İstanbul)',sound:'mescid âyâsûfyâ',c:'teal'},
+            {ar:'باموق قَلْعة',name:'Pamukkale (Denizli)',sound:'bâmûk kal\'a',c:'amber'},
+            {ar:'جَبَل النَّمرود',name:'Nemrut Dağı (Adıyaman)',sound:'cebelu n-nemrûd',c:'violet'},
+            {ar:'قَلْعة البِنْت',name:'Kız Kalesi (Mersin)',sound:'kal\'atu l-bint',c:'rose'},
+            {ar:'سومَلا',name:'Sümela Manastırı (Trabzon)',sound:'sûmelâ',c:'green'},
+          ],compare:null,
+        }
+      },
+      {type:'quiz',title:'Tarihi Mekanlar Alıştırmaları',questions:[
+        {ar:'مَسْجِد آياصوفْيا',ro:'mescid âyâsûfyâ',q:'Bu tarihi mekan hangi şehirdedir? (s.136-139 eşleştirmesi)',opts:['Denizli','İstanbul','İzmir','Trabzon'],ans:1},
+        {ar:'باموق قَلْعة',ro:'bâmûk kal\'a',q:'Bu tarihi mekan (Pamukkale) hangi şehirdedir?',opts:['Denizli','Adıyaman','Mersin','Sivas'],ans:0},
+        {ar:'جَبَل النَّمرود',ro:'cebelu n-nemrûd',q:'Bu tarihi mekan (Nemrut Dağı) hangi şehirdedir?',opts:['Trabzon','Adıyaman','İzmir','Edirne'],ans:1},
+        {ar:'قَلْعة البِنْت',ro:'kal\'atu l-bint',q:'Bu tarihi mekan (Kız Kalesi) hangi şehirdedir?',opts:['Mersin','Çanakkale','Sivas','İzmir'],ans:0},
+        {ar:'سومَلا',ro:'sûmelâ',q:'Bu tarihi mekan (Sümela Manastırı) hangi şehirdedir?',opts:['Edirne','Trabzon','Denizli','Van'],ans:1},
+        {ar:'أَفَس',ro:'efes',q:'Efes antik kenti hangi şehirdedir?',opts:['İzmir','İstanbul','Sivas','Mersin'],ans:0},
+        {ar:'قَلْعة كيليت بَحِر',ro:'kal\'atu kîlît bahr',q:'Kilitbahir Kalesi hangi şehirdedir?',opts:['Edirne','Çanakkale','Adıyaman','Van'],ans:1},
+        {ar:'مَسْجِد سَليمِيّة',ro:'mescid selîmiyye',q:'Selimiye Camii hangi şehirdedir?',opts:['Sivas','Edirne','İzmir','Trabzon'],ans:1},
+        {ar:'مَسْجِد أولو',ro:'mescid ulu',q:'Ulu Cami (eşleştirme alıştırması s.136) hangi şehirdedir?',opts:['Sivas','Denizli','Mersin','Van'],ans:0},
+        {ar:'أَيّ الأَماكِن التّاريخِيّة زُرْتَ في تُركِيا؟',ro:'eyyu l-emâkini t-târîhiyyeti zurte fî turkiyâ?',q:'Bu sorunun Türkçe anlamı nedir? (s.148, soru 3)',opts:['Türkiye\'de hangi tarihi yerleri ziyaret ettin?','Türkiye\'de nerede yaşıyorsun?','En sevdiğin şehir hangisi?','Tatilini nerede geçirdin?'],ans:0},
+      ]}
+    ]
+  },
+  {id:'wb-u4d2',icon:'🇹🇷',color:'rose',title:'ÇK Ü4·Ders2: Vatanımı Seviyorum',sub:'أُحِبُّ وَطَني — Çanakkale ve yönler (s.149-159)',
+    lessons:[
+      {type:'learn',title:'Çanakkale ve Vatan Sevgisi',img:'house',
+        content:{heading:'أُحِبُّ وَطَني',
+          text:'Kitapta Çanakkale Zaferi anlatılıyor ve Mehmet Akif Ersoy\'un "İstiklal Marşı"ndan bir bölüm okunuyor.',
+          arabic:'نُحافِظ على وَطَنِنا · شَمال · جَنوب · شَرْق · غَرْب',ro:'nuhâfizu alâ vatanina · şimâl · cenûb · şark · garb',tr:'Vatanımızı koruruz · Kuzey · Güney · Doğu · Batı',
+          extra:'"أَيُّها المُسافِر! هذه الأَرْضُ..." — Çanakkale\'deki "Dur Yolcu" yazısının Arapçası! 🇹🇷',
+          chips:[
+            {ar:'نُحافِظ على وَطَنِنا',name:'Vatanımızı koruruz',sound:'nuhâfizu alâ vatanina',c:'rose'},
+            {ar:'شَمال',name:'Kuzey',sound:'şimâl',c:'teal'},
+            {ar:'جَنوب',name:'Güney',sound:'cenûb',c:'amber'},
+            {ar:'شَرْق',name:'Doğu',sound:'şark',c:'violet'},
+            {ar:'غَرْب',name:'Batı',sound:'garb',c:'green'},
+          ],compare:null,
+        }
+      },
+      {type:'quiz',title:'Vatanımı Seviyorum Alıştırmaları',questions:[
+        {ar:'تَقَعُ مَدينة إزْمير في غَرْب تُرْكِيا.',ro:'tekau medînetu izmîr fî garbi turkiyâ',q:'Bu cümlenin anlamı? (s.150, harita alıştırması)',opts:['İzmir şehri Türkiye\'nin kuzeyindedir','İzmir şehri Türkiye\'nin batısındadır','İzmir şehri Türkiye\'nin doğusundadır','İzmir şehri Türkiye\'nin güneyindedir'],ans:1},
+        {ar:'تَقَعُ مَدينة سينوب في شَمال تُرْكِيا.',ro:'tekau medînetu sînôb fî şimâli turkiyâ',q:'Bu cümlenin anlamı? (s.150, harita alıştırması)',opts:['Sinop şehri Türkiye\'nin kuzeyindedir','Sinop şehri Türkiye\'nin güneyindedir','Sinop şehri Türkiye\'nin batısındadır','Sinop şehri Türkiye\'nin doğusundadır'],ans:0},
+        {ar:'لِماذا جَناق قَلْعة مَدينة مُهِمّة في العالَم الإسلامِيّ؟',ro:'limâzâ çanakkale medînetun muhimmetun fi l-âlemi l-islâmiyy?',q:'Diyaloğa göre (s.154) Çanakkale neden İslam dünyasında önemli bir şehirdir?',opts:['Çünkü çok büyük bir şehir','Çünkü Çanakkale Savaşı burada yaşam ya da ölüm savaşıydı','Çünkü denize kıyısı var','Çünkü çok eskidir'],ans:1},
+        {ar:'هَل كان جَيْش العَدُوّ أَقْوى مِن جَيْشِنا؟',ro:'hel kâne ceyşu l-aduvvi akvâ min ceyşinâ?',q:'Metne göre (s.156) düşman ordusu bizim ordumuzdan daha mı güçlüydü?',opts:['Evet, daha güçlüydü','Hayır, sayıca daha fazlaydı ama bizimki kazandı','Hiçbir bilgi yok','İkisi de eşitti'],ans:1},
+        {ar:'اليَوْم الثّامِن عَشَر مِن آذار يَوْم انْتِصار جَناق قَلْعة.',ro:'el-yevmu s-sâmine aşera min âzâr yevmu intisâri çanakkale',q:'Bu cümlenin anlamı? (s.156-157, doğru/yanlış alıştırması — DOĞRU)',opts:['18 Mart, Çanakkale Zaferi\'nin günüdür','18 Mart, bir bayram değildir','Mart ayında savaş yoktu','18 Mart, okulların açıldığı gündür'],ans:0},
+        {ar:'هُمْ لَمْ يُفَكِّروا العَوْدة أَبَدًا.',ro:'hum lem yufekkirû l-avdete ebedâ',q:'Bu cümlenin anlamı? (s.156-157, metinden — askerler için)',opts:['Onlar hiç geri dönmeyi düşünmediler','Onlar hemen geri döndüler','Onlar savaşmak istemediler','Onlar yorgundu'],ans:0},
+        {ar:'أُحِبُّ وَطَني وأُحافِظُ عَلَى البيئة.',ro:'uhibbu vatanî ve uhâfizu ale l-bîe',q:'Bu cümlenin anlamı? (s.155, boşluk doldurma)',opts:['Vatanımı seviyorum ve çevreyi korurum','Ailemi seviyorum','Okulumu seviyorum','Hayvanları severim'],ans:0},
+        {ar:'أُحافِظُ على الغابة والحَيَوانات والبِيئة.',ro:'uhâfizu ale l-gâbe ve l-hayevânât ve l-bîe',q:'Bu cümlenin anlamı? (s.159, boşluk doldurma alıştırması)',opts:['Ormanı, hayvanları ve çevreyi korurum','Ormanda yürüyüş yaparım','Hayvanları severim','Ormanı ziyaret ederim'],ans:0},
+        {ar:'ذَهَبَتْ عائِشة إلى جَناق قَلْعة لِأَنَّها تُريد زِيارة النَّصْب التَّذْكارِيّ.',ro:'zehebet âişetu ilâ çanakkale li ennehâ turîdu ziyârate n-nasbi t-tezkâriyy',q:'Eşleştirme alıştırmasına göre (s.157) Ayşe neden Çanakkale\'ye gitti?',opts:['Anıtı ziyaret etmek istediği için','Tatil yapmak istediği için','Okul gezisi olduğu için','Akrabalarını ziyaret etmek için'],ans:0},
+        {ar:'مِن نَشيد الاسْتِقْلال',ro:'min neşîdi l-istiklâl',q:'Kitapta okunan şiirin (s.153) adı Türkçe olarak nedir?',opts:['İstiklal Marşı\'ndan','Gençliğe Hitabe\'den','Bir aşk şiiri','Bir doğa şiiri'],ans:0},
+      ]}
+    ]
+  },
+  {id:'wb-u4d3',icon:'⭐',color:'violet',title:'ÇK Ü4·Ders3: Örnek Şahsiyetler',sub:'الشَّخْصِيّات المِثاليّة — kitaptaki "kendini sına" testi (s.160-169)',
+    lessons:[
+      {type:'learn',title:'Örnek Türk Şahsiyetleri',img:'school',
+        content:{heading:'الشَّخْصِيّات المِثاليّة',
+          text:'Kitapta dört örnek Türk/İslam şahsiyeti tanıtılıyor: biri tarihçi, biri mimar, biri doktor, biri kimyager.',
+          arabic:'مِعْمار سِنان · اِبْن سينا · فُؤاد سَزْكين · عَزيز سَنْجَر',ro:'mi\'mâr sinân · ibn sînâ · fuâd sezgîn · azîz sancar',tr:'Mimar Sinan · İbn-i Sina · Fuat Sezgin · Aziz Sancar',
+          extra:'Aziz Sancar, 2015\'te Nobel Kimya Ödülü\'nü kazanan Türk bilim insanıdır! 🏆',
+          chips:[
+            {ar:'مِعْمار سِنان',name:'Mimar Sinan',sound:'mi\'mâr sinân',c:'teal'},
+            {ar:'اِبْن سينا',name:'İbn-i Sina',sound:'ibn sînâ',c:'amber'},
+            {ar:'فُؤاد سَزْكين',name:'Fuat Sezgin',sound:'fuâd sezgîn',c:'violet'},
+            {ar:'عَزيز سَنْجَر',name:'Aziz Sancar',sound:'azîz sancar',c:'rose'},
+          ],compare:null,
+        }
+      },
+      {type:'quiz',title:'Örnek Şahsiyetler Alıştırmaları',questions:[
+        {ar:'مَن هو أَشْهَر مِعْماريّ في الدَّوْلة العُثمانِيّة؟',ro:'men huve eşheru mi\'mâriyyin fi d-devleti l-usmâniyye?',q:'Osmanlı Devleti\'nin en ünlü mimarı kimdir? (s.169 testi)',opts:['İbn-i Sina','Aziz Sancar','Mimar Sinan','Fuat Sezgin'],ans:2},
+        {ar:'مَن هو عالِم وطَبيب مُسْلِم شَهير؟',ro:'men huve âlimun ve tabîbun muslimun şehîr?',q:'Ünlü bir Müslüman bilgin ve doktor kimdir? (s.169 testi)',opts:['İbn-i Sina','Aziz Sancar','Mimar Sinan','Fuat Sezgin'],ans:0},
+        {ar:'مَن هو رائِد تاريخ العُلوم العَرَبِيّة والإسلامِيّة؟',ro:'men huve râidu târîhi l-ulûmi l-arabiyyeti ve l-islâmiyye?',q:'Arap ve İslam bilimleri tarihinin öncüsü kimdir? (s.169 testi)',opts:['İbn-i Sina','Fuat Sezgin','Mimar Sinan','Aziz Sancar'],ans:1},
+        {ar:'مَن هو عالِم كيميائيّ تُرْكيّ حَصَل على جائِزة نوبِل؟',ro:'men huve âlimun kîmiyâiyyun turkiyyun hasale alâ câizeti nôbil?',q:'Nobel Ödülü kazanan Türk kimyager kimdir? (s.169 testi)',opts:['İbn-i Sina','Mimar Sinan','Fuat Sezgin','Aziz Sancar'],ans:3},
+        {ar:'لِماذا تَتَّخِذُ فُؤاد سَزْكين قُدوة لِنَفْسِك؟',ro:'limâzâ tettehizu fuâd sezgîn kudveten li-nefsik?',q:'Metne göre Fuat Sezgin neden örnek alınır? (s.169 testi, soru 9)',opts:['Çünkü tıbbın babasıdır','Çünkü kimya alanında birçok ödül kazandı','Çünkü eşsiz eserler inşa etti','Çünkü Arap ve İslam bilimleri tarihinin öncüsüdür'],ans:3},
+        {ar:'ما هو «تاريخ التُّراث العَرَبيّ»؟',ro:'mâ huve târîhu t-turâsi l-arabiyy?',q:'Fuat Sezgin\'in 15 ciltlik eserinin adı nedir? (s.161 metni)',opts:['Târîhu\'t-Turâsi\'l-Arabî','Bir cami adı','Bir şiir kitabı','Bir şehir adı'],ans:0},
+        {ar:'ما هو «القانون في الطِّبّ»؟',ro:'mâ huve l-kânûnu fi t-tıbb?',q:'İbn-i Sina\'nın en ünlü tıp kitabının adı nedir? (s.161 metni)',opts:['El-Kânûn fi\'t-Tıbb','Bir cami adı','Mimar Sinan\'ın eseri','Bir ödül adı'],ans:0},
+        {ar:'كان عَلِيّ بن أَبي طالِب يَشْتَهِر بِعَدالَتِه.',ro:'kâne aliyyu bnu ebî tâlib yeştehiru bi-adâletih',q:'Bu cümlenin anlamı? (s.167, eşleştirme alıştırması)',opts:['Ali bin Ebi Talib adaletiyle tanınırdı','Ali bin Ebi Talib cesaretiyle tanınırdı','Ali bin Ebi Talib cömertliğiyle tanınırdı','Ali bin Ebi Talib güçlü imanıyla tanınırdı'],ans:0},
+        {ar:'كان أَبو بَكْر الصِّدّيق يَشْتَهِر بِحَيائِه.',ro:'kâne ebû bekr es-sıddîk yeştehiru bi-hayâih',q:'Bu cümlenin anlamı? (s.167, eşleştirme alıştırması)',opts:['Hz. Ebu Bekir hayasıyla (utangaçlığıyla) tanınırdı','Hz. Ebu Bekir cesaretiyle tanınırdı','Hz. Ebu Bekir cömertliğiyle tanınırdı','Hz. Ebu Bekir adaletiyle tanınırdı'],ans:0},
+        {ar:'مَن تَتَّخِذونَ قُدوة لِأَنْفُسِكُم مِن الشَّخْصِيّات المِثاليّة؟ ولِماذا؟',ro:'men tettehizûne kudveten li-enfusikum mine ş-şahsiyyâti l-misâliyye?',q:'Diyalogdaki öğretmenin sorusu (s.164) Türkçe olarak ne anlama gelir?',opts:['Örnek şahsiyetlerden kimi kendinize örnek alıyorsunuz ve neden?','En sevdiğiniz ders hangisi?','Büyüyünce ne olmak istiyorsunuz?','Tatilde nereye gittiniz?'],ans:0},
+      ]}
+    ]
+  },
+{id:'wb-u5d1',icon:'📝',color:'teal',title:'ÇK Ü5·Ders1: Beş Vakit Namaz',sub:'الصَّلَوات الخَمْس — kitaptaki alıştırma kelimeleri',
+    lessons:[
+      {type:'learn',title:'Namaz Vakitleri ve Rükünleri',img:'house',
+        content:{heading:'الصَّلَوات الخَمْس',
+          text:'Beş vakit namazın isimleri ve namazdaki temel hareketler kitabın alıştırmalarında resimlerle anlatılıyor.',
+          arabic:'صَلاة الفَجْر · صَلاة الظُّهْر · صَلاة العَصْر · صَلاة المَغْرِب · صَلاة العِشاء',ro:'salâtu-lfecr · salâtu-zzuhr · salâtu-l\'asr · salâtu-lmagrib · salâtu-l\'işâ',tr:'Sabah namazı · Öğle namazı · İkindi namazı · Akşam namazı · Yatsı namazı',
+          extra:'Kitapta Ahmed öğretmenine beş vaktin isimlerini tek tek sayıyor — sen de sayabilir misin? 🕌',
+          chips:[
+            {ar:'أَقومُ وأَقول',name:'Kıyamda derim',sound:'ekûmu ve ekûl',c:'teal'},
+            {ar:'أَرْكَعُ وأَقول',name:'Rükûda derim',sound:'erke\'u ve ekûl',c:'amber'},
+            {ar:'أَسْجُدُ وأَقول',name:'Secdede derim',sound:'escudu ve ekûl',c:'violet'},
+            {ar:'أَجْلِسُ لِلتَّشَهُّد',name:'Teşehhüde otururum',sound:'eclisu littişehhüd',c:'rose'},
+            {ar:'أُسَلِّمُ',name:'Selam veririm',sound:'usellimu',c:'green'},
+          ],compare:null,
+        }
+      },
+      {type:'quiz',title:'Namaz Alıştırmaları',questions:[
+        {ar:'أَرْكَعُ وأَقول: «سُبْحانَ رَبِّيَ العَظيم»',ro:'erke\'u ve ekûl: subhâne rabbiye-l\'azîm',q:'Rükûda ne denir?',opts:['Sübhâne Rabbiye-l-azîm','Allâhu ekber','Sübhâne Rabbiye-l-a\'lâ','Semi\'allâhu li men hamideh'],ans:0},
+        {ar:'أَسْجُدُ وأَقول: «سُبْحانَ رَبِّيَ الأَعْلى»',ro:'escudu ve ekûl: subhâne rabbiye-l-a\'lâ',q:'Secdede ne denir?',opts:['Allâhu ekber','Sübhâne Rabbiye-l-a\'lâ','Semi\'allâhu li men hamideh','Esselâmu aleyküm'],ans:1},
+        {ar:'الصَّلاة الأولى',ro:'essalâtu-l-ûlâ',q:'"İlk namaz" hangi namaza karşılık gelir?',opts:['Fecr (Sabah)','Zuhr (Öğle)','Asr (İkindi)','İşâ (Yatsı)'],ans:0},
+        {ar:'الصَّلاة الرّابِعة',ro:'essalâtu-rrâbi\'a',q:'"Dördüncü namaz" hangisidir?',opts:['Fecr','Zuhr','Mağrib','İşâ'],ans:2},
+        {ar:'أَتَوَضَّأُ قَبْلَ الصَّلاة',ro:'etevaddau kable-ssalâh',q:'"Namazdan önce abdest alırım" cümlesinin anlamı?',opts:['Namazdan sonra abdest alırım','Namazdan önce abdest alırım','Namaza geç kalırım','Namazda konuşurum'],ans:1},
+        {ar:'كَم رَكْعَة فَرْض صَلاة الظُّهْر؟',ro:'kem rek\'a fard salâti-zzuhr?',q:'Öğle namazının farzı kaç rekattır?',opts:['İki rekat','Üç rekat','Dört rekat','Beş rekat'],ans:2},
+        {ar:'أَذْهَبُ إلى المَسْجِد',ro:'ezhebu ile-lmescid',q:'"Camiye giderim" cümlesinin anlamı?',opts:['Camiden çıkarım','Camiye giderim','Evde kalırım','Okula giderim'],ans:1},
+        {ar:'أُصَلّي صَلاة الفَجْر في وَقْتِها دائِمًا',ro:'usallî salâte-lfecri fî vaktihâ dâimen',q:'"Sabah namazını her zaman vaktinde kılarım" cümlesinin anlamı?',opts:['Sabah namazını hiç kılmam','Sabah namazını her zaman vaktinde kılarım','Sabah namazını geç kılarım','Sabah namazını camide kılarım'],ans:1},
+        {ar:'المُؤَذِّن يُؤَذِّن لِصَلاة الفَجْر',ro:'elmuezzinu yueźźinu lisalâti-lfecr',q:'"Müezzin sabah namazı için ezan okur" cümlesinin anlamı?',opts:['İmam hutbe okur','Müezzin sabah namazı için ezan okur','Çocuk Kur\'an okur','Baba dua eder'],ans:1},
+        {ar:'أُصَلّي خَمْس مَرّات في اليَوْم',ro:'usallî hamse merrâtin fi-lyevm',q:'"Günde beş kez namaz kılarım" cümlesinin anlamı?',opts:['Günde bir kez namaz kılarım','Haftada beş kez namaz kılarım','Günde beş kez namaz kılarım','Hiç namaz kılmam'],ans:2},
+      ]}
+    ]
+  },
+  {id:'wb-u5d2',icon:'📝',color:'amber',title:'ÇK Ü5·Ders2: Oruç',sub:'الصَّوْم — kitaptaki alıştırma kelimeleri',
+    lessons:[
+      {type:'learn',title:'Ramazan ve Oruç Kelimeleri',img:'house',
+        content:{heading:'الصَّوْم',
+          text:'Kitaptaki diyalogda öğretmen orucu tanımlıyor: <b>"الصَّوْم هو الإمْساك عَن تَناوُل الطَّعام والشَّراب مِن طُلوع الفَجْر حَتّى غُروب الشَّمْس."</b> (Oruç, şafağın sökmesinden güneşin batışına kadar yemek ve içmekten uzak durmaktır.)',
+          arabic:'صَوْم · شَهْر رَمَضان · وَجْبة السَّحور · الإفْطار · صَلاة التَّراويح · لَيْلة القَدْر',ro:'savm · şehru ramadân · vecbetu-ssehûr · el-iftâr · salâtu-ttarâvîh · leyletu-lkadr',tr:'Oruç · Ramazan ayı · Sahur yemeği · İftar · Teravih namazı · Kadir gecesi',
+          extra:'Kadir Gecesi, bin aydan daha hayırlıdır — kitaptaki ayet de bunu hatırlatıyor! 🌙',
+          chips:[
+            {ar:'شَهْر رَمَضان',name:'Ramazan ayı',sound:'şehru ramadân',c:'teal'},
+            {ar:'وَجْبة السَّحور',name:'Sahur yemeği',sound:'vecbetu-ssehûr',c:'amber'},
+            {ar:'الإفْطار',name:'İftar',sound:'el-iftâr',c:'violet'},
+            {ar:'صَلاة التَّراويح',name:'Teravih namazı',sound:'salâtu-ttarâvîh',c:'rose'},
+            {ar:'لَيْلة القَدْر',name:'Kadir gecesi',sound:'leyletu-lkadr',c:'green'},
+          ],compare:null,
+        }
+      },
+      {type:'quiz',title:'Oruç Alıştırmaları',questions:[
+        {ar:'وَجْبة السَّحور مُهِمّة لِصِحّة الصّائِم',ro:'vecbetu-ssehûri muhimmetun lisıhhati-ssâim',q:'"Sahur yemeği oruçlunun sağlığı için önemlidir" — bu cümlede boşluğa ne gelir: "وَجْبة ___ مُهِمّة"؟',opts:['الإفْطار','السَّحور','التَّراويح','القَدْر'],ans:1},
+        {ar:'نُصَلّي التَّراويح في شَهْر رَمَضان',ro:'nusallî-ttarâvîha fî şehri ramadân',q:'Teravih namazı hangi ayda kılınır?',opts:['Şevval','Zilhicce','Ramazan','Receb'],ans:2},
+        {ar:'لَيْلة القَدْر خَيْر مِن أَلْف شَهْر',ro:'leyletu-lkadri hayrun min elfi şehr',q:'"Kadir gecesi bin aydan daha hayırlıdır" — bu cümle neyi anlatır?',opts:['Sahurun önemini','Kadir gecesinin değerini','İftar vaktini','Ramazan orucunun süresini'],ans:1},
+        {ar:'يَنْتَظِرُ أَحْمَد وَقْت الإفْطار حَوْل المائِدة',ro:'yentezıru ahmedu vakte-liftâri havle-lmâide',q:'"Ahmed sofranın etrafında iftar vaktini bekler" cümlesinde boşluğa ne gelir: "يَنْتَظِرُ أَحْمَد وَقْت ___ حَوْل المائِدة"؟',opts:['السَّحور','الإفْطار','الصَّلاة','القُرآن'],ans:1},
+        {ar:'أُنْزِلَ القُرْآن الكَريم في شَهْر رَمَضان',ro:'unzile-lkur\'ânu-lkerîmu fî şehri ramadân',q:'Kur\'an-ı Kerim hangi ayda indirildi?',opts:['Şevval','Ramazan','Zilhicce','Muharrem'],ans:1},
+        {ar:'الصَّوْم هو الإمْساك عَن الطَّعام والشَّراب مِن الفَجْر حَتّى غُروب الشَّمْس',ro:'essavmu huve-l-imsâku ani-ttaâmi ve-şşerâbi mine-lfecri hattâ gurûbi-şşems',q:'Orucun tanımı aşağıdakilerden hangisidir?',opts:['Sadece namaz kılmaktır','Şafaktan güneş batana kadar yiyip içmemektir','Sadece gece yemek yememektir','Camiye gitmektir'],ans:1},
+        {ar:'يُؤَذِّن المُؤَذِّن لِصَلاة المَغْرِب',ro:'yuezzinu-lmuezzinu lisalâti-lmagrib',q:'"Müezzin akşam namazı için ezan okur" — iftar hangi ezandan sonra yapılır?',opts:['Sabah ezanından sonra','Öğle ezanından sonra','Akşam ezanından sonra','Yatsı ezanından sonra'],ans:2},
+        {ar:'نَصومُ في شَهْر رَمَضان',ro:'nasûmu fî şehri ramadân',q:'"Ramazan ayında oruç tutarız" cümlesinin anlamı?',opts:['Ramazan ayında oruç tutarız','Ramazan ayında tatile çıkarız','Ramazan ayında okula gideriz','Ramazan ayında seyahat ederiz'],ans:0},
+        {ar:'يُفْطِرُ أَحْمَد مع أُسْرَتِه بَعْد أَذان المَغْرِب',ro:'yuftiru ahmedu me\'a usretihi ba\'de ezâni-lmagrib',q:'Ahmed ailesiyle ne zaman iftar açar?',opts:['Akşam ezanından önce','Akşam ezanından sonra','Sabah ezanından sonra','Yatsı ezanından sonra'],ans:1},
+        {ar:'صَوْم رَمَضان مُهِمّ لِصِحّة الإنْسان',ro:'savmu ramadâne muhimmun lisıhhati-l-insân',q:'"Ramazan orucu insan sağlığı için önemlidir" cümlesinde boşluğa ne gelir: "___ رَمَضان مُهِمّ لِصِحّة الإنْسان"؟',opts:['صَوْم','إفْطار','سَحور','تَراويح'],ans:0},
+      ]}
+    ]
+  },
+  {id:'wb-u5d3',icon:'📝',color:'violet',title:'ÇK Ü5·Ders3: Dini Bayramlar',sub:'الأعْياد الدّينيّة — kitaptaki alıştırma kelimeleri',
+    lessons:[
+      {type:'learn',title:'Bayram Kelimeleri',img:'house',
+        content:{heading:'الأَعْياد الدّينيّة',
+          text:'Kitapta: <b>"في الإسْلام عيدان، وهما عيد الفِطْر وعيد الأَضْحى."</b> (İslam\'da iki bayram vardır: Ramazan Bayramı ve Kurban Bayramı.)',
+          arabic:'عيد الفِطْر · عيد الأَضْحى · المَلابِس العيدِيّة · تَقْبيل اليَد · صَلاة العيد · زيارة الأَقارِب',ro:'îdu-lfıtr · îdu-l-adhâ · elmelâbisu-l\'îdiyye · taqbîlu-lyed · salâtu-l\'îd · ziyâretu-l-ekârib',tr:'Ramazan Bayramı · Kurban Bayramı · Bayramlık kıyafetler · El öpme · Bayram namazı · Akraba ziyareti',
+          extra:'Bayramlaşırken "كُلّ عام وأَنْتُم بِخَيْر" (Her yıl hayırlı olsun) denir! 🎉',
+          chips:[
+            {ar:'عيد الفِطْر',name:'Ramazan Bayramı',sound:'îdu-lfıtr',c:'teal'},
+            {ar:'عيد الأَضْحى',name:'Kurban Bayramı',sound:'îdu-l-adhâ',c:'amber'},
+            {ar:'تَقْبيل اليَد',name:'El öpme',sound:'taqbîlu-lyed',c:'violet'},
+            {ar:'صَلاة العيد',name:'Bayram namazı',sound:'salâtu-l\'îd',c:'rose'},
+            {ar:'كُلّ عام وأَنْتُم بِخَيْر',name:'Her yıl hayırlı olsun',sound:'küllü âmin ve entüm bihayr',c:'green'},
+          ],compare:null,
+        }
+      },
+      {type:'quiz',title:'Bayramlar Alıştırmaları',questions:[
+        {ar:'في الإسْلام عيدان',ro:'fi-l-islâmi îdân',q:'İslam\'da kaç bayram vardır?',opts:['Bir bayram','İki bayram','Üç bayram','Dört bayram'],ans:1},
+        {ar:'عيد الفِطْر وعيد الأَضْحى',ro:'îdu-lfıtri ve îdu-l-adhâ',q:'İslam\'daki iki bayramın adı nedir?',opts:['Ramazan Bayramı ve Kurban Bayramı','Kurban Bayramı ve Cuma','Ramazan Bayramı ve Aşure','Mevlid ve Kurban Bayramı'],ans:0},
+        {ar:'يَسْتَغْرِقُ عيد الفِطْر ثَلاثة أَيّام',ro:'yestagriku îdu-lfıtri selâsete eyyâm',q:'Ramazan Bayramı kaç gün sürer?',opts:['İki gün','Üç gün','Dört gün','Beş gün'],ans:1},
+        {ar:'يَسْتَغْرِقُ عيد الأَضْحى أَرْبَعة أَيّام',ro:'yestagriku îdu-l-adhâ erbe\'ate eyyâm',q:'Kurban Bayramı kaç gün sürer?',opts:['İki gün','Üç gün','Dört gün','Beş gün'],ans:2},
+        {ar:'عيد الأَضْحى في شَهْر ذي الحِجّة',ro:'îdu-l-adhâ fî şehri źi-lhicce',q:'Kurban Bayramı hangi ayda kutlanır?',opts:['Ramazan ayında','Şevval ayında','Zilhicce ayında','Receb ayında'],ans:2},
+        {ar:'يُفْطِرُ الصّائِم بَعْد أَذان المَغْرِب',ro:'yuftiru-ssâimu ba\'de ezâni-lmagrib',q:'Oruçlu kişi ne zaman iftar açar?',opts:['Akşam ezanından sonra','Akşam ezanından önce','Sabah ezanından sonra','Yatsı ezanından sonra'],ans:0},
+        {ar:'نَلْبَسُ المَلابِس العيدِيّة في صَباح العيد',ro:'nelbesu-lmelâbise-l\'îdiyyete fî sabâhi-l\'îd',q:'Bayram sabahı ne giyilir?',opts:['Okul kıyafeti','Bayramlık kıyafet','Pijama','Spor kıyafeti'],ans:1},
+        {ar:'نُقَبِّلُ أَيْدي الكِبار في أُسْرَتِنا',ro:'nukabbilu eydiye-lkibâri fî usretinâ',q:'"Ailemizdeki büyüklerin elini öperiz" cümlesinin anlamı?',opts:['Büyüklerin elini öperiz','Büyüklere hediye veririz','Büyüklerle konuşmayız','Büyükleri ziyaret etmeyiz'],ans:0},
+        {ar:'نَزورُ أَقارِبَنا وأَصْدِقاءَنا',ro:'nezûru ekâribenâ ve esdikâenâ',q:'"Akraba ve arkadaşlarımızı ziyaret ederiz" cümlesinin anlamı?',opts:['Hiç kimseyi ziyaret etmeyiz','Akraba ve arkadaşlarımızı ziyaret ederiz','Sadece komşuları ziyaret ederiz','Sadece okulu ziyaret ederiz'],ans:1},
+        {ar:'«كُلّ عام وأَنْتُم بِخَيْر»',ro:'küllü âmin ve entüm bihayr',q:'Bayramlaşırken ne denir?',opts:['Allâhu ekber','Kül âmin ve entüm bihayr','Es-selâmu aleyküm','Şükren'],ans:1},
+      ]}
+    ]
+  },
+  {id:'wb-u6d1',icon:'📝',color:'teal',title:'ÇK Ü6·Ders1: Cep Telefonu',sub:'الهاتِف الجَوّال — kitaptaki alıştırma kelimeleri',
+    lessons:[
+      {type:'learn',title:'Cep Telefonu Aksesuarları',img:'game',
+        content:{heading:'الهاتِف الجَوّال',
+          text:'Babasıyla telefon almaya giden Enes\'in diyaloğunda geçen aksesuar isimleri: <b>"أُريدُ أَنْ أُرْسِلَ رِسالة قَصيرة إلى أَصْدِقائي وأَتَجَوَّل في إنْتَرْنَت بِسُرْعة."</b>',
+          arabic:'هاتِف جَوّال · شَريحة · سَمّاعة · جِهاز الشَّحْن · كَفَر الجَوّال · حِماية شاشة',ro:'hâtifun cevvâl · şerîha · sammâ\'a · cihâzu-şşahn · keferu-lcevvâl · hımâyetu şâşe',tr:'Cep telefonu · SIM kart · Kulaklık · Şarj cihazı · Telefon kılıfı · Ekran koruyucu',
+          extra:'Baba, Enes\'e yeni telefonu alırken "telefonu çok kullanma" diye şart koşuyor! 📱',
+          chips:[
+            {ar:'هاتِف جَوّال',name:'Cep telefonu',sound:'hâtifun cevvâl',c:'teal'},
+            {ar:'شَريحة',name:'SIM kart',sound:'şerîha',c:'amber'},
+            {ar:'ذاكِرة خارِجِيّة',name:'Harici hafıza',sound:'źâkira hâricıyye',c:'violet'},
+            {ar:'عَصا سيلْفي',name:'Selfie çubuğu',sound:'asâ silfî',c:'rose'},
+            {ar:'باوُر بَنْك',name:'Powerbank',sound:'bâvur benk',c:'green'},
+          ],compare:null,
+        }
+      },
+      {type:'quiz',title:'Cep Telefonu Alıştırmaları',questions:[
+        {ar:'سِلْك شاحِن',ro:'silku şâhin',q:'Bu kelimenin anlamı?',opts:['Şarj kablosu','Kulaklık','Telefon kılıfı','SIM kart'],ans:0},
+        {ar:'ذاكِرة خارِجِيّة',ro:'źâkira hâricıyye',q:'Bu kelimenin anlamı?',opts:['Harici hafıza kartı','Dahili hafıza','Ekran koruyucu','Şarj cihazı'],ans:0},
+        {ar:'كَفَر الجَوّال',ro:'keferu-lcevvâl',q:'Bu kelimenin anlamı?',opts:['Telefon kılıfı','Kulaklık','SIM kart','Powerbank'],ans:0},
+        {ar:'شاحِن سَيّارة',ro:'şâhinu seyyâre',q:'Bu kelimenin anlamı?',opts:['Araç şarj cihazı','Ev şarj cihazı','Araç telefon tutucusu','Selfie çubuğu'],ans:0},
+        {ar:'عَصا سيلْفي',ro:'asâ silfî',q:'Bu kelimenin anlamı?',opts:['Selfie çubuğu','Kulaklık','Ekran koruyucu','SIM kart'],ans:0},
+        {ar:'باوُر بَنْك',ro:'bâvur benk',q:'Bu kelimenin anlamı?',opts:['Powerbank (taşınabilir şarj)','Telefon kılıfı','Hafıza kartı','Kulaklık'],ans:0},
+        {ar:'حامِل جَوّال لِلسَّيّارة',ro:'hâmilu cevvâlin lissayyâra',q:'Bu kelimenin anlamı?',opts:['Araç telefon tutucusu','Araç şarj cihazı','Selfie çubuğu','Powerbank'],ans:0},
+        {ar:'شَريحة',ro:'şerîha',q:'Bu kelimenin anlamı?',opts:['SIM kart','Şarj cihazı','Kulaklık','Telefon kılıfı'],ans:0},
+        {ar:'جِهاز الشَّحْن',ro:'cihâzu-şşahn',q:'Bu kelimenin anlamı?',opts:['Şarj cihazı','Hafıza kartı','Kulaklık','SIM kart'],ans:0},
+        {ar:'سَمّاعة',ro:'sammâ\'a',q:'Bu kelimenin anlamı?',opts:['Kulaklık','Şarj kablosu','SIM kart','Telefon kılıfı'],ans:0},
+      ]}
+    ]
+  },
+  {id:'wb-u6d2',icon:'📝',color:'amber',title:'ÇK Ü6·Ders2: Bilgisayar',sub:'الحاسوب — kitaptaki alıştırma kelimeleri',
+    lessons:[
+      {type:'learn',title:'Bilgisayar Parçaları',img:'game',
+        content:{heading:'الحاسوب',
+          text:'Bilgisayarın parçaları ve internet ile ilgili kelimeler, Zeynep ve Sadık\'ın diyaloğundan.',
+          arabic:'حاسوب مَحْمول · حاسوب مَكْتَبِيّ · شاشة الحاسوب · فَأْرة · لَوْحة المَفاتيح · شَبَكة الإنْتَرْنَت',ro:'hâsûb mahmûl · hâsûb mektebî · şâşetu-lhâsûb · fe\'re · levhatu-lmefâtîh · şebeketu-l-internet',tr:'Dizüstü bilgisayar · Masaüstü bilgisayar · Bilgisayar ekranı · Fare · Klavye · İnternet ağı',
+          extra:'Zeynep kardeşine "fare, klavyenin yanında" diyor — bazen bilgisayar da yavaş internet yüzünden canımızı sıkıyor! 💻',
+          chips:[
+            {ar:'حاسوب مَحْمول',name:'Dizüstü bilgisayar',sound:'hâsûb mahmûl',c:'teal'},
+            {ar:'فَأْرة',name:'Fare',sound:'fe\'re',c:'amber'},
+            {ar:'لَوْحة المَفاتيح',name:'Klavye',sound:'levhatu-lmefâtîh',c:'violet'},
+            {ar:'ذاكِرة فِلاش',name:'Flash bellek',sound:'źâkiretu filâş',c:'rose'},
+            {ar:'البَريد الإلِكْتْرونِيّ',name:'E-posta',sound:'elberîdu-l-ilektrônî',c:'green'},
+          ],compare:null,
+        }
+      },
+      {type:'quiz',title:'Bilgisayar Alıştırmaları',questions:[
+        {ar:'صُنْدوق الحاسوب',ro:'sundûku-lhâsûb',q:'Bu kelimenin anlamı?',opts:['Bilgisayar kasası','Bilgisayar ekranı','Klavye','Fare'],ans:0},
+        {ar:'هارِد ديسك خارِجِيّ',ro:'hârid disk hâricî',q:'Bu kelimenin anlamı?',opts:['Harici disk','Dahili disk','Flash bellek','Modem'],ans:0},
+        {ar:'ذاكِرة فِلاش',ro:'źâkiretu filâş',q:'Bu kelimenin anlamı?',opts:['Flash bellek','Harici disk','Yazıcı','Mikrofon'],ans:0},
+        {ar:'مودَم إنْتَرْنَت',ro:'mûdem internet',q:'Bu kelimenin anlamı?',opts:['İnternet modemi','Yazıcı','Hoparlör','Mikrofon'],ans:0},
+        {ar:'الدَّرْدَشة',ro:'eddardeşe',q:'Bu kelimenin anlamı?',opts:['Sohbet (chat)','Yazdırma','Dosya','E-posta'],ans:0},
+        {ar:'مَلَفّ',ro:'melef',q:'Bu kelimenin anlamı?',opts:['Dosya','Yazıcı','Mikrofon','Hoparlör'],ans:0},
+        {ar:'طابِعة',ro:'tâbi\'a',q:'Bu kelimenin anlamı?',opts:['Yazıcı','Tarayıcı','Hoparlör','Mikrofon'],ans:0},
+        {ar:'مُكَبِّر الصَّوْت',ro:'mukebbiru-ssavt',q:'Bu kelimenin anlamı?',opts:['Hoparlör','Mikrofon','Yazıcı','Klavye'],ans:0},
+        {ar:'أَبي يَمْنَعُني عَن الدَّرْدَشة في الإنْتَرْنَت لِمُدّة طَويلة',ro:'ebî yemna\'unî ani-ddardeşeti fi-l-internet limuddetin tavîle',q:'"Babam uzun süre internette sohbet etmemi engelliyor" cümlesinin anlamı?',opts:['Babam uzun süre internette sohbet etmemi engelliyor','Babam bana yeni bilgisayar alıyor','Babam internette sohbet ediyor','Babam bilgisayarı tamir ediyor'],ans:0},
+        {ar:'أُريدُ أَنْ أَتَصَفَّحَ في الإنْتَرْنَت طَوال اليَوْم',ro:'urîdu en etesaffaha fi-l-interneti tavâle-lyevm',q:'"Bütün gün internette gezinmek istiyorum" cümlesinin anlamı?',opts:['Bütün gün internette gezinmek istiyorum','Hiç internete girmek istemiyorum','Sadece ödev için internete gireceğim','İnternetim çok yavaş'],ans:0},
+      ]}
+    ]
+  },
+  {id:'wb-u6d3',icon:'📝',color:'violet',title:'ÇK Ü6·Ders3: Mektup',sub:'الرِّسالة — kitaptaki "kendini sına" testinden',
+    lessons:[
+      {type:'learn',title:'Posta ve Mektup Kelimeleri',img:'game',
+        content:{heading:'الرِّسالة',
+          text:'Baba, Emir\'e eskiden dedesine nasıl kağıt mektup yazıp postaladığını anlatıyor: <b>"كُنْتُ أَكْتُبُ الرِّسالة على الوَرَقة، وأَضَعُها في الظَّرْف، ثُمّ أَلْصَقُ طابَعًا عَلَيْها."</b>',
+          arabic:'ساعي البَريد · ظَرْف · وَرَقة · طابَع · مَكْتَب البَريد · رِسالة',ro:'sâ\'i-lberîd · zarf · veraka · tâbe\' · mektebu-lberîd · risâle',tr:'Postacı · Zarf · Kağıt · Pul · Postane · Mektup',
+          extra:'Eskiden duman işareti ve posta güvercini bile mektup göndermek için kullanılırmış! 🕊️',
+          chips:[
+            {ar:'ساعي البَريد',name:'Postacı',sound:'sâ\'i-lberîd',c:'teal'},
+            {ar:'طابَع',name:'Pul',sound:'tâbe\'',c:'amber'},
+            {ar:'صُنْدوق البَريد',name:'Posta kutusu',sound:'sundûku-lberîd',c:'violet'},
+            {ar:'الحَمام الزّاجِل',name:'Posta güvercini',sound:'elhamâmu-zzâcil',c:'rose'},
+            {ar:'البَريد الإلِكْتْرونِيّ',name:'E-posta',sound:'elberîdu-l-ilektrônî',c:'green'},
+          ],compare:null,
+        }
+      },
+      {type:'quiz',title:'Mektup Alıştırmaları',questions:[
+        {ar:'ما هذا؟ (sarmal kablo)',ro:'mâ hâzâ?',q:'Resimdeki kablo nedir? (Kitaptaki "kendini sına" testinden)',opts:['Bu bir cep telefonudur','Bu bir şarj cihazıdır','Bu bir telefon kılıfıdır','Bu bir şarj kablosudur'],ans:3},
+        {ar:'ما هذا؟ (cep telefonu)',ro:'mâ hâzâ?',q:'Resimdeki nesne nedir?',opts:['Bu bir şarj cihazıdır','Bu bir cep telefonudur','Bu bir şarj kablosudur','Bu bir cep telefonu kılıfıdır'],ans:1},
+        {ar:'ما هذه؟ (kulaklık)',ro:'mâ hâzihi?',q:'Resimdeki nesne nedir?',opts:['Bu bir kulaklıktır','Bu bir pildir','Bu bir SIM karttır','Bu bir ekran koruyucudur'],ans:0},
+        {ar:'ما هذا؟ (masaüstü bilgisayar)',ro:'mâ hâzâ?',q:'Resimdeki nesne nedir?',opts:['Bu bilgisayar kasasıdır','Bu masaüstü bilgisayardır','Bu hoparlördür','Bu dizüstü bilgisayardır'],ans:1},
+        {ar:'هَل هذه فَأْرة أَم طابِعة؟',ro:'hel hâzihi fe\'retun em tâbi\'a?',q:'Resimdeki nesne fare mi yoksa yazıcı mı?',opts:['Bu klavyedir','Bu flash bellektir','Bu yazıcıdır','Bu faredir'],ans:3},
+        {ar:'أَيْن ذاكِرة فِلاش؟',ro:'eyne źâkiretu filâş?',q:'Flash bellek nerede? (resimde masaüstü bilgisayarın yanında)',opts:['Flash bellek masaüstü bilgisayarın üzerindedir','Flash bellek çantadadır','Flash bellek selfie çubuğunun yanındadır','Flash bellek masanın üzerindedir'],ans:0},
+        {ar:'ما هذا؟ (pul)',ro:'mâ hâzâ?',q:'Resimdeki nesne nedir?',opts:['Bu posta kutusudur','Bu zarftır','Bu bir e-postadır','Bu puldur'],ans:3},
+        {ar:'ما هذه؟ (mektup/zarf içinde)',ro:'mâ hâzihi?',q:'Resimdeki nesne nedir?',opts:['Bu puldur','Bu mektuptur','Bu kağıttır','Bu bir saattir'],ans:1},
+        {ar:'مَتى أَرْسَلْتَ البَريد الإلِكْتْرونِيّ؟ (الساعة الثّالِثة)',ro:'metâ erselte-lberîde-l-ilektrônî?',q:'E-postayı ne zaman gönderdin? (saat üçte)',opts:['E-postayı saat dörtte gönderdim','Ben e-postayı saat üçte gönderdim (yanlış fiil çekimi)','Sen e-postayı saat üçte gönderdin','E-postayı saat beşte gönderdim'],ans:2},
+        {ar:'الحَمام الزّاجِل لِإرْسال الرَّسائِل مِن مَكان إلى مَكان',ro:'elhamâmu-zzâcilu li-irsâli-rresâili min mekânin ilâ mekân',q:'Posta güvercini ne için kullanılırdı?',opts:['Yemek pişirmek için','Mektupları bir yerden bir yere göndermek için','Ev temizlemek için','Bahçe sulamak için'],ans:1},
       ]}
     ]
   },
