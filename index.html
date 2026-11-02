@@ -280,8 +280,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 }
 .fc.active{background:var(--teal);border-color:var(--teal);color:#fff}
 .word-card{background:var(--surface);border-radius:var(--r);border:2px solid var(--border);
-  margin-bottom:8px;display:flex;align-items:center;gap:12px;padding:12px;
+  margin-bottom:8px;padding:12px;display:flex;flex-direction:column;gap:6px;
 }
+.word-card-row{display:flex;align-items:center;gap:12px;width:100%}
 .w-ar{font-family:'Amiri',serif;font-size:2rem;font-weight:700;direction:rtl;min-width:70px;text-align:right;color:var(--teal)}
 .w-info{flex:1;min-width:0}
 .w-tr{font-size:0.95rem;font-weight:800;color:var(--fg)}
@@ -293,10 +294,16 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .lv-B1{background:var(--violet-s);color:var(--violet)}
 .lv-B2{background:var(--rose-s);color:var(--rose)}
 .w-srs{font-size:0.6rem;background:var(--rose-s);color:var(--rose);border-radius:99px;padding:2px 6px;margin-left:4px;font-weight:800}
-.w-play{width:34px;height:34px;border-radius:50%;background:var(--violet-s);border:2px solid var(--violet);
+.w-actions{display:flex;gap:6px;align-items:center;flex-shrink:0}
+.w-play{width:36px;height:36px;border-radius:50%;background:var(--violet-s);border:2px solid var(--violet);
   display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.9rem;flex-shrink:0;transition:background 0.15s;
 }
 .w-play:hover{background:var(--violet);color:#fff}
+.w-mic{width:36px;height:36px;border-radius:50%;background:var(--rose-s);border:2px solid var(--rose);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.9rem;flex-shrink:0;transition:background 0.15s;
+}
+.w-mic:hover{background:var(--rose);color:#fff}
+.w-mic.listening{animation:micPulse 1s infinite;background:var(--rose);color:#fff}
 
 /* PLAN */
 .plan-week{background:var(--surface);border-radius:var(--r);border:2px solid var(--border);margin-bottom:12px;overflow:hidden}
@@ -377,7 +384,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 @media(min-width:1024px){body{max-width:860px}}
 @media(max-width:360px){.opts{grid-template-columns:1fr}}
 </style>
-</head>
+<script src="/_aistudio-iframe.js?v=1f94f900"></script></head>
 <body>
 
 <div class="origin-warn hidden" id="originWarn">
@@ -561,7 +568,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
       </div>
       <button class="cont-btn" style="margin-bottom:8px" onclick="exportBackup()">⬇️ Yedeği Dosyaya İndir</button>
       <input type="file" id="importFileInput" accept=".json" style="display:none" onchange="importBackupFile(this)">
-      <button class="cont-btn amber" onclick="document.getElementById('importFileInput').click()">⬆️ Yedek Dosyasından Geri Yükle</button>
+      <button class="cont-btn amber" style="margin-bottom:8px" onclick="document.getElementById('importFileInput').click()">⬆️ Yedek Dosyasından Geri Yükle</button>
+      <button class="cont-btn green" onclick="downloadStandaloneHtml(this)">📄 Tam HTML Dosyasını İndir (~256 KB)</button>
     </div>
   </div>
 </div>
@@ -633,6 +641,52 @@ async function exportBackup(){
     setTimeout(()=>URL.revokeObjectURL(url),2000);
   }catch(e){
     alert('⚠️ Yedek dosyası indirilemedi.');
+  }
+}
+async function downloadStandaloneHtml(btnEl){
+  const origText=btnEl?btnEl.textContent:'';
+  try{
+    if(btnEl)btnEl.textContent='⏳ Hazırlanıyor...';
+    let htmlText=window.__RAW_STANDALONE_HTML__||'';
+    if(!htmlText||htmlText.length<100000){
+      try{
+        const r1=await fetch('/api/standalone-html');
+        if(r1.ok){
+          const t1=await r1.text();
+          if(t1&&t1.length>100000)htmlText=t1;
+        }
+      }catch(e){}
+    }
+    if(!htmlText||htmlText.length<100000){
+      try{
+        const r2=await fetch('/assets/aistudio/index_8fdcb744.html');
+        if(r2.ok){
+          const t2=await r2.text();
+          if(t2&&t2.length>100000)htmlText=t2;
+        }
+      }catch(e){}
+    }
+    if(!htmlText||htmlText.length<100000){
+      htmlText='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+    }
+    const cleanHtml=htmlText.replace(/<div id="standaloneDownloadBanner"[\s\S]*?<\/button>\s*<\/div>\s*/,'');
+    const blob=new Blob([cleanHtml],{type:'text/html;charset=utf-8'});
+    const kb=Math.round(blob.size/1024);
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;
+    a.download='index.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(url),4000);
+    if(btnEl){
+      btnEl.textContent='✅ İndirildi ('+kb+' KB)';
+      setTimeout(()=>{btnEl.textContent=origText},3500);
+    }
+  }catch(e){
+    if(btnEl)btnEl.textContent=origText;
+    alert('⚠️ HTML dosyası indirilirken hata oluştu.');
   }
 }
 function importBackupFile(input){
@@ -838,85 +892,279 @@ function srsRecord(wordAr,correct){
   else{r.wrong++;r.interval=1;r.nextReview=Date.now()+86400000;}
   save();
 }
+function getAllReviewableItems(){
+  const map=new Map();
+  VOCAB.forEach(w=>{map.set(w.ar,{ar:w.ar,ro:w.ro,tr:w.tr});});
+  [CHAPTERS,SCHOOL_CHAPTERS,GRADE7_CHAPTERS,WORKBOOK_CHAPTERS].forEach(group=>{
+    group.forEach(ch=>{
+      ch.lessons.forEach(lsn=>{
+        if(lsn.type==='quiz'&&lsn.questions){
+          lsn.questions.forEach(q=>{
+            if(!map.has(q.ar)){
+              map.set(q.ar,{ar:q.ar,ro:q.ro||'',tr:q.opts[q.ans],q:q.q,opts:q.opts,ans:q.ans});
+            }
+          });
+        }
+      });
+    });
+  });
+  return map;
+}
 function srsDueCount(){
   const now=Date.now();
-  return Object.values(P().srs).filter(r=>r.nextReview<=now).length;
+  return Object.values(P().srs||{}).filter(r=>r&&r.nextReview<=now).length;
 }
 function srsDueWords(){
   const now=Date.now();
-  return VOCAB.filter(w=>P().srs[w.ar]&&P().srs[w.ar].nextReview<=now);
+  const srs=P().srs||{};
+  const allMap=getAllReviewableItems();
+  const due=[];
+  Object.keys(srs).forEach(ar=>{
+    if(srs[ar]&&srs[ar].nextReview<=now){
+      const item=allMap.get(ar);
+      if(item)due.push(item);
+      else due.push({ar,ro:'',tr:ar});
+    }
+  });
+  return due;
 }
 
 // ══════════════════════════════════════════════════════
-//  SES
+//  SES — Fonetik Düzeltme + Sunucu TTS + Tarayıcı TTS
 // ══════════════════════════════════════════════════════
+const TTS_OVERRIDE={
+  'ـٌ':'بٌ ، كِتَابٌ',
+  'ـً':'بً ، كِتَابًا',
+  'ـٍ':'بٍ ، كِتَابٍ',
+  'ـً · ـٍ · ـٌ':'بً ، بٍ ، بٌ',
+  'بْ':'أَبْ',
+  'أ · و · ي':'أَلِف ، وَاو ، يَاء',
+  'بَ · بِ · بُ · بْ':'بَ ، بِ ، بُ ، أَبْ',
+  'بَ · بِ · بُ':'بَ ، بِ ، بُ',
+  'بَ · بَا':'بَ ، بَا',
+  '١ · ٢ · ٣ · ٤ · ٥':'وَاحِدٌ ، اِثْنَانِ ، ثَلَاثَةٌ ، أَرْبَعَةٌ ، خَمْسَةٌ',
+  '١':'وَاحِدٌ',
+  '٥':'خَمْسَةٌ',
+  'ش س ص':'شِين ، سِين ، صَاد',
+  'ق ك م':'قَاف ، كَاف ، مِيم',
+  'ت ث د ذ ر ز س ش ص ض ط ظ ل ن':'تَاء ، ثَاء ، دَال ، ذَال ، رَاء ، زَاي ، سِين ، شِين ، صَاد ، ضَاد ، طَاء ، ظَاء ، لَام ، نُون'
+};
+function cleanArForTts(raw){
+  if(!raw)return '';
+  const trimmed=raw.trim();
+  if(TTS_OVERRIDE[trimmed])return TTS_OVERRIDE[trimmed];
+  return trimmed
+    .replace(/\([^)]*[a-zA-ZçğıöşüÇĞİÖŞÜ][^)]*\)/g,'') // Türkçe parantez içi açıklamaları sil: (sarmal kablo) vb.
+    .replace(/\[[^\]]*\]/g,'')
+    .replace(/·/g,' ، ')
+    .replace(/\.{2,}/g,' ')
+    .replace(/_+/g,' ')
+    .replace(/\s+/g,' ')
+    .trim();
+}
 function hasMed(t){return /[اوي]/.test(t.replace(/[\u064B-\u0652]/g,''))&&/[\u064E\u064F\u0650]/.test(t)}
-function speak(text,lang='ar-SA',rate){
+function pickBestVoice(lang){
+  if(!window.speechSynthesis)return null;
+  const voices=window.speechSynthesis.getVoices()||[];
+  const prefix=lang.slice(0,2).toLowerCase();
+  const matching=voices.filter(v=>v.lang&&v.lang.toLowerCase().startsWith(prefix));
+  if(!matching.length)return null;
+  return matching.find(v=>/natural|google|maged|tarik|laila|hoda|salma|online/i.test(v.name))||matching[0];
+}
+const _audioCache={};
+let _activeAudio=null;
+let _hasServerTts=false;
+if(typeof location!=='undefined'&&location.protocol.startsWith('http')){
+  fetch('/api/tts-health').then(r=>{if(r&&r.ok)_hasServerTts=true;}).catch(()=>{});
+}
+function speakBrowser(ttsText,lang='ar-SA',rate){
   if(!window.speechSynthesis)return;
   try{
     window.speechSynthesis.cancel();
-    const u=new SpeechSynthesisUtterance(text);
-    u.lang=lang;u.rate=rate||(hasMed(text)?0.55:0.8);u.pitch=1;
-    const v=window.speechSynthesis.getVoices().find(x=>x.lang.startsWith(lang.slice(0,2)));
+    const u=new SpeechSynthesisUtterance(ttsText);
+    u.lang=lang;u.rate=rate||(hasMed(ttsText)?0.65:0.82);u.pitch=1;
+    const v=pickBestVoice(lang);
     if(v)u.voice=v;
     window.speechSynthesis.speak(u);
   }catch(e){}
 }
+async function speak(text,lang='ar-SA',rate){
+  const isAr=lang.toLowerCase().startsWith('ar');
+  const ttsText=isAr?cleanArForTts(text):text;
+  if(!ttsText)return;
+  if(_activeAudio){try{_activeAudio.pause();_activeAudio.currentTime=0;}catch(e){}}
+  if(window.speechSynthesis)window.speechSynthesis.cancel();
+  const nativeVoice=pickBestVoice(lang);
+  // Standalone HTML olarak indirildiğinde (veya tarayıcıda Arapça ses varken) senkron olarak anında konuş
+  if(!_hasServerTts||nativeVoice){
+    speakBrowser(ttsText,lang,rate);
+    return;
+  }
+  const slow=rate&&rate<=0.65;
+  const cacheKey=lang+':'+(slow?'slow':'norm')+':'+ttsText;
+  if(_audioCache[cacheKey]){
+    try{
+      _activeAudio=new Audio(_audioCache[cacheKey]);
+      await _activeAudio.play();
+      return;
+    }catch(e){}
+  }
+  try{
+    const ctrl=new AbortController();
+    const timer=setTimeout(()=>ctrl.abort(),3500);
+    const res=await fetch('/api/tts',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({text:ttsText,lang,slow:!!slow}),
+      signal:ctrl.signal
+    });
+    clearTimeout(timer);
+    if(res.ok){
+      const data=await res.json();
+      if(data&&data.audioBase64){
+        const dataUrl='data:'+(data.mimeType||'audio/wav')+';base64,'+data.audioBase64;
+        _audioCache[cacheKey]=dataUrl;
+        _activeAudio=new Audio(dataUrl);
+        await _activeAudio.play();
+        return;
+      }
+    }
+  }catch(e){}
+  speakBrowser(ttsText,lang,rate);
+}
 function speakCompare(short,long){
-  if(!window.speechSynthesis)return;
-  window.speechSynthesis.cancel();
-  function mk(t,r){const u=new SpeechSynthesisUtterance(t);u.lang='ar-SA';u.rate=r;
-    const v=window.speechSynthesis.getVoices().find(x=>x.lang.startsWith('ar'));if(v)u.voice=v;return u;}
-  window.speechSynthesis.speak(mk(short,0.9));
-  setTimeout(()=>window.speechSynthesis.speak(mk(long,0.5)),1300);
+  speak(short,'ar-SA',0.9);
+  setTimeout(()=>speak(long,'ar-SA',0.55),1300);
 }
 if(window.speechSynthesis){window.speechSynthesis.getVoices();window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices()}
 
 // ══════════════════════════════════════════════════════
-//  SESLİ TANIMA — mikrofon ile telaffuz
+//  SESLİ TANIMA — mikrofon ile telaffuz & benzerlik skoru
 // ══════════════════════════════════════════════════════
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+const MIC_EQUIV={
+  'ـٌ':['ب','بن','ون','كتاب','تنوين'],
+  'ـً':['ب','بن','با','ان','كتابا','تنوين'],
+  'ـٍ':['ب','بن','ين','كتاب','تنوين'],
+  'ـً · ـٍ · ـٌ':['بن','تنوين','ان ين ون'],
+  'بْ':['اب','ب','با'],
+  'بَ':['ب','با','به'],
+  'بِ':['ب','بي','به'],
+  'بُ':['ب','بو','به'],
+  '١':['واحد','١','1'],
+  '٥':['خمسه','خمس','٥','5']
+};
 function normalizeAr(t){
-  return t.replace(/[ً-ْٰ]/g,'') // harekeleri sil
-          .replace(/[إأآا]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي')
-          .replace(/\s+/g,'').trim();
+  if(!t)return '';
+  return t
+    .replace(/\([^)]*\)/g,'') // parantez içi açıklamaları sil
+    .replace(/\[[^\]]*\]/g,'')
+    .replace(/[\u064B-\u065F\u0670\u0640]/g,'') // harekeleri ve tatweel'i sil
+    .replace(/[إأآٱا]/g,'ا')
+    .replace(/ة/g,'ه')
+    .replace(/ى/g,'ي')
+    .replace(/ؤ/g,'و')
+    .replace(/ئ/g,'ي')
+    .replace(/[^\u0621-\u064A\u0660-\u06690-9\s]/g,' ') // noktalama işaretlerini (؟ ، . · « » ! -) temizle
+    .replace(/\s+/g,' ')
+    .trim();
 }
-function startMic(expected,btnId){
-  const resEl=document.getElementById('micResult');
+function levenshtein(a,b){
+  const m=a.length,n=b.length;
+  if(!m)return n;if(!n)return m;
+  const dp=Array.from({length:m+1},()=>new Array(n+1).fill(0));
+  for(let i=0;i<=m;i++)dp[i][0]=i;
+  for(let j=0;j<=n;j++)dp[0][j]=j;
+  for(let i=1;i<=m;i++){
+    for(let j=1;j<=n;j++){
+      const cost=a[i-1]===b[j-1]?0:1;
+      dp[i][j]=Math.min(dp[i-1][j]+1,dp[i][j-1]+1,dp[i-1][j-1]+cost);
+    }
+  }
+  return dp[m][n];
+}
+function calcSimilarity(saidRaw,expectedRaw){
+  const trimmedExp=(expectedRaw||'').trim();
+  const sNoSpace=normalizeAr(saidRaw).replace(/\s+/g,'');
+  if(!sNoSpace)return 0;
+  if(MIC_EQUIV[trimmedExp]){
+    if(MIC_EQUIV[trimmedExp].some(eq=>{
+      const eqN=normalizeAr(eq).replace(/\s+/g,'');
+      return sNoSpace===eqN||sNoSpace.includes(eqN)||eqN.includes(sNoSpace);
+    }))return 100;
+  }
+  const eNorm=normalizeAr(expectedRaw);
+  const sNorm=normalizeAr(saidRaw);
+  const eNoSpace=eNorm.replace(/\s+/g,'');
+  if(!eNoSpace)return 100;
+  if(sNoSpace===eNoSpace)return 100;
+  // Çoklu parçalı ifadelerde ("بَ · بَا" vb.) parçalardan herhangi birini tam söylerse de yüksek puan ver
+  if(expectedRaw.includes('·')){
+    const parts=expectedRaw.split('·').map(p=>normalizeAr(p).replace(/\s+/g,'')).filter(Boolean);
+    for(const p of parts){
+      if(sNoSpace===p||sNoSpace.includes(p))return 95;
+    }
+  }
+  const dist=levenshtein(sNoSpace,eNoSpace);
+  const maxLen=Math.max(sNoSpace.length,eNoSpace.length);
+  const charSim=Math.round(((maxLen-dist)/maxLen)*100);
+  // Kelime bazlı örtüşme kontrolü
+  const eWords=eNorm.split(' ').filter(Boolean);
+  const sWords=sNorm.split(' ').filter(Boolean);
+  let matchedWords=0;
+  eWords.forEach(ew=>{
+    if(sWords.some(sw=>sw===ew||levenshtein(sw,ew)<=1))matchedWords++;
+  });
+  const wordSim=eWords.length>1?Math.round((matchedWords/eWords.length)*100):0;
+  return Math.max(charSim,wordSim);
+}
+function startMic(expected,btnId,resId='micResult'){
+  const resEl=document.getElementById(resId);
   const btn=document.getElementById(btnId);
-  // content://, file:// gibi adreslerde mikrofon API'si tarayıcı tarafından engellenir
   if(window.isSecureContext===false){
     if(resEl)resEl.innerHTML='<div class="mic-result bad">⚠️ Mikrofon bu sayfada çalışmıyor çünkü uygulama "dosya" olarak açılmış. Yukarıdaki kırmızı uyarıdan doğru linki aç.</div>';
     return;
   }
   if(!SR){
-    if(resEl)resEl.innerHTML='<div class="mic-result bad">⚠️ Cihazınız sesli tanımayı desteklemiyor. Android Chrome\'da Arapça dil paketi gerekebilir.</div>';
+    if(resEl)resEl.innerHTML='<div class="mic-result bad">⚠️ Tarayıcınız sesli tanımayı desteklemiyor. Chrome veya Edge tarayıcısını kullanabilirsiniz.</div>';
     return;
   }
   try{
+    if(_activeAudio){try{_activeAudio.pause();}catch(e){}}
+    if(window.speechSynthesis)window.speechSynthesis.cancel();
     const rec=new SR();
-    rec.lang='ar-SA';rec.maxAlternatives=3;rec.interimResults=false;
+    rec.lang='ar-SA';rec.maxAlternatives=5;rec.interimResults=false;
     if(btn)btn.classList.add('listening');
-    if(resEl)resEl.innerHTML='<div class="mic-result ok">🎤 Dinliyorum... şimdi söyle!</div>';
+    if(resEl)resEl.innerHTML='<div class="mic-result ok">🎤 Dinliyorum... şimdi Arapça telaffuz et!</div>';
+    const cleanTarget=cleanArForTts(expected);
     rec.onresult=(e)=>{
-      const said=e.results[0][0].transcript;
-      const match=Array.from(e.results[0]).some(alt=>normalizeAr(alt.transcript)===normalizeAr(expected));
+      const alts=Array.from(e.results[0]);
+      const said=alts[0].transcript;
+      let bestScore=0;
+      let bestTranscript=said;
+      alts.forEach(alt=>{
+        const sc=calcSimilarity(alt.transcript,expected);
+        if(sc>bestScore){bestScore=sc;bestTranscript=alt.transcript;}
+      });
+      const threshold=normalizeAr(expected).replace(/\s+/g,'').length<=3?65:75;
       if(resEl){
-        if(match){
-          resEl.innerHTML=`<div class="mic-result ok">✅ Harika telaffuz! "${said}" doğru algılandı.</div>`;
-          P().xp+=5;updateHeader();renderXpBar();save();
+        if(bestScore>=threshold){
+          resEl.innerHTML=`<div class="mic-result ok">✅ Harika telaffuz! (%${bestScore} uyum) — "${bestTranscript}" doğru algılandı. +5 XP</div>`;
+          P().xp+=5;srsRecord(expected,true);updateHeader();renderXpBar();save();
+        } else if(bestScore>=50){
+          resEl.innerHTML=`<div class="mic-result bad" style="background:var(--amber-s);color:#92400E">🟡 Çok yaklaştın! (%${bestScore} uyum) — "${said}" duyuldu. Bir kez daha net söylemeyi dene! Hedef: <b>${cleanTarget}</b></div>`;
         } else {
-          resEl.innerHTML=`<div class="mic-result bad">🔁 "${said}" duyuldu — tekrar dene! Hedef: ${expected}</div>`;
+          resEl.innerHTML=`<div class="mic-result bad">🔁 "${said}" duyuldu (%${bestScore} uyum) — tekrar dene! Hedef: <b>${cleanTarget}</b></div>`;
         }
       }
     };
     rec.onerror=(e)=>{
       const msgs={
-        'not-allowed':'⚠️ Mikrofon izni verilmedi. Tarayıcı ayarlarından bu siteye mikrofon izni ver.',
-        'service-not-allowed':'⚠️ Mikrofon izni verilmedi. Tarayıcı ayarlarından bu siteye mikrofon izni ver.',
-        'audio-capture':'⚠️ Mikrofon bulunamadı. Cihazında mikrofon olduğundan emin ol.',
-        'network':'⚠️ İnternet bağlantısı gerekiyor (ses tanıma Google sunucusunu kullanır).',
-        'no-speech':'🔁 Bir şey duyulmadı, daha yüksek sesle tekrar dene.',
+        'not-allowed':'⚠️ Mikrofon izni verilmedi. Tarayıcı adres çubuğundan mikrofon izni verin.',
+        'service-not-allowed':'⚠️ Mikrofon izni verilmedi. Tarayıcı ayarlarından mikrofon izni verin.',
+        'audio-capture':'⚠️ Mikrofon bulunamadı. Cihazınızda mikrofon olduğundan emin olun.',
+        'network':'⚠️ İnternet bağlantısı gerekiyor (ses tanıma çevrimiçi çalışır).',
+        'no-speech':'🔁 Ses duyulmadı, mikrofona yakınlaşarak tekrar deneyin.',
       };
       if(resEl)resEl.innerHTML='<div class="mic-result bad">'+(msgs[e.error]||'⚠️ Ses algılanamadı, tekrar dene.')+'</div>';
       if(btn)btn.classList.remove('listening');
@@ -1977,7 +2225,7 @@ const WORKBOOK_CHAPTERS=[
         {ar:'فَراوِلة',ro:'ferâvile',q:'Bu kelimenin anlamı?',opts:['Kiraz','Kayısı','Çilek','Karpuz'],ans:2},
         {ar:'نَعْناع',ro:'na\'nâ',q:'Bu kelimenin anlamı?',opts:['Nane','Maydanoz','Biber','Fasulye'],ans:0},
         {ar:'بَقْدونِس',ro:'bakdûnis',q:'Bu kelimenin anlamı?',opts:['Nane','Maydanoz','Kabak','Fasulye'],ans:1},
-        {ar:'أَتُفَضِّلين الكَرَز أَم المِشْمِش؟ أُفَضِّلُ المِشْمِش.',ro:'etüfeddilîne l-kereze em el-mişmiş? ufeddilu l-mişmiş',q:'Bu diyaloğun anlamı (kitap s.78)?',opts:['Kirazı mı kayısıyı mı tercih edersin? Kayısıyı tercih ederim.','Çileği mi kirazı mı tercih edersin? Çileği tercih ederim.','Karpuzu mu kavunu mu tercih edersin? Kavunu tercih ederim.','Patlıcanı mı domatesi mi tercih edersin? Domatesi tercih ederim.'],ans:1},
+        {ar:'أَتُفَضِّلين الكَرَز أَم المِشْمِش؟ أُفَضِّلُ المِشْمِش.',ro:'etüfeddilîne l-kereze em el-mişmiş? ufeddilu l-mişmiş',q:'Bu diyaloğun anlamı (kitap s.78)?',opts:['Kirazı mı kayısıyı mı tercih edersin? Kayısıyı tercih ederim.','Çileği mi kirazı mı tercih edersin? Çileği tercih ederim.','Karpuzu mu kavunu mu tercih edersin? Kavunu tercih ederim.','Patlıcanı mı domatesi mi tercih edersin? Domatesi tercih ederim.'],ans:0},
         {ar:'بِكَم هذه الكوسة؟ هذه الكوسة خَمْس عَشْرة ليرة.',ro:'bikem hâzihi l-kûse? hâzihi l-kûse hamse aşrete lîreh',q:'Bu diyaloğun anlamı (kitap s.90 testi)?',opts:['Bu kabak kaça? Bu kabak 15 liraya.','Bu patlıcan kaça? 15 liraya.','Bu domates kaça? 15 liraya.','Bu karpuz kaça? 15 liraya.'],ans:0},
       ]}
     ]
@@ -2002,7 +2250,7 @@ const WORKBOOK_CHAPTERS=[
       {type:'quiz',title:'Hava Güneşli Alıştırmaları',questions:[
         {ar:'كَيْف الجَوّ اليَوْم؟',ro:'keyfe l-cevv el-yevm?',q:'Kitaptaki "اختبر نفسك" testi (s.133), soru 1 — resimde yağmur var, doğru cevap hangisi?',opts:['الجَوّ غائِم (Hava bulutlu)','الجَوّ عاصِف (Hava fırtınalı)','الجَوّ مُشْمِس (Hava güneşli)','الجَوّ مُمْطِر (Hava yağmurlu)'],ans:3},
         {ar:'هَل الجَوّ ضَبابِيّ اليَوْم؟',ro:'hel el-cevv dabâbiyy el-yevm?',q:'Resimde sisli bir orman var (s.133, soru 4) — doğru cevap?',opts:['نَعَم، الجَوّ ضَبابِيّ (Evet, hava sisli)','لا، الجَوّ ضَبابِيّ','نَعَم، الجَوّ مُثْلِج','لا، الجَوّ مُثْلِج'],ans:0},
-        {ar:'ماذا تَلْبَس في فَصْل الشِّتاء؟',ro:'mâzâ telbes fî fasli ş-şitâ?',q:'Kışın ne giyersin? (s.134, soru 7 — resimde kaban var)',opts:['تَلْبَس القَميص (Gömlek giyersin)','تَلْبَس المِعْطَف (Kaban giyersin)','أَلْبَس القَميص','أَلْبَس المِعْطَف'],ans:1},
+        {ar:'ماذا تَلْبَس في فَصْل الشِّتاء؟',ro:'mâzâ telbes fî fasli ş-şitâ?',q:'Kışın ne giyersin? (s.134, soru 7 — resimde kaban var)',opts:['تَلْبَس القَميص (Gömlek giyersin)','أَلْبَس المِعْطَف (Kaban giyerim)','أَلْبَس القَميص (Gömlek giyerim)','تَلْبَس المِعْطَف (Kaban giyersin)'],ans:1},
         {ar:'كَيْف الجَوّ اليَوْم؟',ro:'keyfe l-cevv el-yevm?',q:'s.134 soru 8 — resimde güneş var, doğru cevap?',opts:['الجَوّ مُثْلِج','الجَوّ مُشْمِس (Hava güneşli)','الجَوّ ضَبابِيّ','الجَوّ صافي'],ans:1},
         {ar:'لِماذا يَشْعُر بِالسُّرور في أَيّام العُطْلة؟',ro:'limâzâ yeş\'ur bi-s-surûr fî eyyâmi l-utla?',q:'Ahmed tatil günlerinde neden mutlu? (s.134, soru 9 — resimde kum kalesi yapıyor)',opts:['Çünkü denizde yüzüyor','Çünkü sahilde kum kalesi yapıyor','Çünkü tarihi yerleri ziyaret ediyor','Çünkü dalgalara biniyor'],ans:1},
         {ar:'أَيْن سَيَذْهَب خَليل وعائِلَته؟',ro:'eyne seyezhebu halîl ve âiletuh?',q:'Diyaloğa göre (s.127) Halil ve ailesi tatillerini nerede geçiriyor?',opts:['İstanbul\'da','Antalya\'da','İzmir\'de','Ankara\'da'],ans:1},
@@ -2640,7 +2888,8 @@ function renderMascot(view){
       <line x1="25" y1="22" x2="20" y2="21.5" stroke="#555" stroke-width="0.6"/>
       <line x1="25" y1="23.5" x2="20" y2="23" stroke="#555" stroke-width="0.6"/>
     </svg>
-    <div class="mascot-bubble">${msg}</div>`;
+    <div class="mascot-bubble">${msg}</div>
+    ${due>0?`<div style="margin-top:8px"><button class="sound-btn" style="background:var(--rose-s);border-color:var(--rose);color:var(--rose)" onclick="startSrsQuiz()">🔄 ${due} Bekleyen Kelimeyi Tekrar Et</button></div>`:''}`;
 }
 const CLRS={teal:'var(--teal-s)',violet:'var(--violet-s)',rose:'var(--rose-s)',amber:'var(--amber-s)',green:'var(--green-s)'};
 const FGS={teal:'var(--teal)',violet:'var(--violet)',rose:'var(--rose)',amber:'var(--amber)',green:'var(--green)'};
@@ -2703,7 +2952,9 @@ let activeFilter='Tümü',activeLvFilter='Tümü';
 function renderWords(){
   const cats=['Tümü',...new Set(VOCAB.map(w=>w.cat))];
   const lvs=['Tümü','A1','A2','B1','B2'];
+  const due=srsDueCount();
   document.getElementById('filterRow').innerHTML=
+    (due>0?`<button class="fc active" style="background:var(--rose);border-color:var(--rose)" onclick="startSrsQuiz()">🔄 Tekrar Testi (${due})</button>`:`<button class="fc" style="border-color:var(--violet);color:var(--violet)" onclick="startSrsQuiz()">🔄 Kelime Tekrar Testi</button>`)+
     lvs.map(l=>`<button class="fc ${l===activeLvFilter?'active':''}" onclick="setLvF('${l}')">${l}</button>`).join('')+
     '<span style="width:1px;background:var(--border);margin:0 2px;align-self:stretch;display:inline-block"></span>'+
     cats.slice(0,8).map(c=>`<button class="fc ${c===activeFilter?'active':''}" onclick="setF('${c}')">${c}</button>`).join('');
@@ -2711,19 +2962,28 @@ function renderWords(){
   if(activeLvFilter!=='Tümü')list=list.filter(w=>w.lv===activeLvFilter);
   if(activeFilter!=='Tümü')list=list.filter(w=>w.cat===activeFilter);
   const now=Date.now();
-  document.getElementById('wordsList').innerHTML=list.map(w=>{
+  document.getElementById('wordsList').innerHTML=list.map((w,idx)=>{
     const srs=P().srs[w.ar];
-    const due=srs&&srs.nextReview<=now;
+    const isDue=srs&&srs.nextReview<=now;
+    const esc=w.ar.replace(/'/g,"\\'");
+    const btnId='wMicBtn_'+idx;
+    const resId='wMicRes_'+idx;
     return`<div class="word-card">
-      <div class="w-ar">${w.ar}</div>
-      <div class="w-info">
-        <div class="w-tr">${w.tr}</div>
-        <div class="w-ro">${w.ro}</div>
-        <span class="w-cat">${w.cat}</span>
-        <span class="w-lv lv-${w.lv}">${w.lv}</span>
-        ${due?'<span class="w-srs">🔄 Tekrar</span>':''}
+      <div class="word-card-row">
+        <div class="w-ar">${arSyl(w.ar)}</div>
+        <div class="w-info">
+          <div class="w-tr">${w.tr}</div>
+          <div class="w-ro">${w.ro}</div>
+          <span class="w-cat">${w.cat}</span>
+          <span class="w-lv lv-${w.lv}">${w.lv}</span>
+          ${isDue?'<span class="w-srs">🔄 Tekrar</span>':''}
+        </div>
+        <div class="w-actions">
+          <button class="w-play" title="Sesli Dinle" onclick="speak('${esc}')">🔊</button>
+          <button class="w-mic" id="${btnId}" title="Telaffuz Et" onclick="startMic('${esc}','${btnId}','${resId}')">🎤</button>
+        </div>
       </div>
-      <div class="w-play" onclick="speak('${w.ar.replace(/'/g,"\\'")}')">🔊</div>
+      <div id="${resId}"></div>
     </div>`;
   }).join('');
 }
@@ -2762,9 +3022,46 @@ function renderPlan(){
 }
 
 // ══════════════════════════════════════════════════════
-//  LESSON ENGINE
+//  LESSON ENGINE & SRS TEKRAR TESTİ
 // ══════════════════════════════════════════════════════
 let curCh=null,lsnIdx=0,qIdx=0,answers=[],fbDone=false;
+
+function startSrsQuiz(){
+  let pool=srsDueWords();
+  if(!pool.length){
+    // Bekleyen yoksa yanlış yapılan soruları veya VOCAB'dan ilk 8 kelimeyi al
+    const allMap=getAllReviewableItems();
+    const wrongItems=(P().wrongQ||[]).map(ar=>allMap.get(ar)).filter(Boolean);
+    pool=wrongItems.length?wrongItems:VOCAB.slice(0,8);
+  }
+  const selected=pool.slice(0,10);
+  const allTr=VOCAB.map(w=>w.tr);
+  const questions=selected.map(item=>{
+    if(item.opts&&typeof item.ans==='number'){
+      return {ar:item.ar,ro:item.ro||'',q:item.q||'Bu ifadenin anlamı nedir?',opts:item.opts,ans:item.ans};
+    }
+    const correctTr=item.tr||item.ar;
+    const distractors=allTr.filter(t=>t!==correctTr).sort(()=>Math.random()-0.5).slice(0,3);
+    const opts=[correctTr,...distractors].sort(()=>Math.random()-0.5);
+    return {
+      ar:item.ar,
+      ro:item.ro||'',
+      q:'Bu kelimenin Türkçe anlamı nedir?',
+      opts,
+      ans:opts.indexOf(correctTr)
+    };
+  });
+  curCh={
+    id:'srs-review',
+    icon:'🔄',
+    color:'rose',
+    title:'Aralıklı Tekrar (SRS) Testi',
+    sub:'Unutma eğrisini yen!',
+    lessons:[{type:'quiz',title:'SRS Kelime Tekrarı',questions}]
+  };
+  lsnIdx=0;qIdx=0;answers=[];fbDone=false;
+  showView('lesson');renderLesson();
+}
 
 function openChapter(id){
   curCh=CHAPTERS.find(c=>c.id===id)||SCHOOL_CHAPTERS.find(c=>c.id===id)||GRADE7_CHAPTERS.find(c=>c.id===id)||WORKBOOK_CHAPTERS.find(c=>c.id===id);
@@ -2805,11 +3102,22 @@ function renderLesson(){
   fbDone=false;
 }
 
+let _learnMicTarget='';
+function selectLearnChip(ar,idx){
+  _learnMicTarget=ar;
+  speak(ar);
+  document.querySelectorAll('.hk').forEach((el,i)=>{
+    el.style.borderColor=(i===idx)?'var(--teal)':'var(--border)';
+  });
+  const lbl=document.getElementById('micBtnLearnLabel');
+  if(lbl)lbl.textContent='🎤 Telaffuz Dene: '+ar;
+}
 function renderLearn(lsn){
   const c=lsn.content;
   const svg=SVGS[lsn.img]||SVGS.greet;
-  const chips=c.chips.map(h=>`
-    <div class="hk" onclick="speak('${h.ar.replace(/'/g,"\\'")}')">
+  _learnMicTarget=(c.chips&&c.chips[0]?c.chips[0].ar:c.arabic);
+  const chips=c.chips.map((h,idx)=>`
+    <div class="hk" style="border-color:${idx===0?'var(--teal)':'var(--border)'}" onclick="selectLearnChip('${h.ar.replace(/'/g,"\\'")}',${idx})">
       <span class="har">${h.ar}</span>
       <span class="hn">${h.name}</span>
       <span class="hs">${h.sound}</span>
@@ -2818,7 +3126,7 @@ function renderLearn(lsn){
     `<button class="sound-btn" onclick="speakCompare('${c.compare.short}','${c.compare.long}')">
       <span class="pulse">🔊</span> Kısa→Uzun Karşılaştır
     </button>`:
-    `<button class="sound-btn" onclick="speak('${c.arabic.replace(/'/g,"\\'").replace(/·/g,' ')}')">
+    `<button class="sound-btn" onclick="speak('${c.arabic.replace(/'/g,"\\'")}')">
       <span class="pulse">🔊</span> Sesli Dinle
     </button>`;
   return`<div class="learn-card">
@@ -2830,12 +3138,16 @@ function renderLearn(lsn){
     <div class="ro">${c.ro}</div>
     ${c.tr?`<div class="ro" style="color:var(--fg2);font-weight:700;margin-top:-2px">${c.tr}</div>`:''}
     <div class="hk-row">${chips}</div>
+    <div style="margin:8px 0 4px">
+      ${compareBtn}
+      <button class="mic-btn" id="micBtnLearn" onclick="startMic(_learnMicTarget,'micBtnLearn','micResultLearn')"><span id="micBtnLearnLabel">🎤 Telaffuz Dene: ${_learnMicTarget}</span></button>
+      <div id="micResultLearn"></div>
+    </div>
     <div class="tip-box">💡 <b>Minik Patili diyor ki:</b> ${c.extra}</div>
     <div style="font-size:0.68rem;color:var(--fg3);margin-top:6px;line-height:1.4">
-      🔈 Not: Cihazındaki Arapça ses, harekeyi olması gerekenden biraz farklı çıkarabilir (örn. "a" yerine "e"ye yakın) — bu, telefonun ses motoruna göre değişir, yazılı okunuş her zaman doğrudur.
+      🔈 İpucu: Kutucuklara tıklayarak tek tek dinleyebilir ve seçtiğin kutucuğu 🎤 butonuyla telaffuz edebilirsin.
     </div>
   </div>
-  ${compareBtn}
   <button class="cont-btn amber" style="margin-top:12px" onclick="nextLesson()">Anladım → Devam Et</button>`;
 }
 
@@ -2849,7 +3161,7 @@ function renderQuiz(lsn){
     <div class="q-ar">${arSyl(q.ar)}</div>
     <div class="q-ro">${q.ro}</div>
     <div style="font-size:0.66rem;color:var(--fg3);margin:-4px 0 8px;line-height:1.4">
-      🔈 Not: Cihazındaki Arapça ses bazen harekeyi farklı çıkarabilir (örn. "a" yerine "e"ye yakın) — bunun sebebi telefonunda gerçek bir Arapça ses motorunun kurulu olmaması. Yazılı okunuş (${q.ro}) her zaman doğru kabul edilmeli.
+      🔈 Yazılı okunuş (${q.ro}) ve sesli dinleme ile telaffuzu karşılaştırabilirsin.
     </div>
     <button class="sound-btn" onclick="speak('${q.ar.replace(/'/g,"\\'")}')"><span class="pulse">🔊</span> Dinle</button>
     <br><button class="mic-btn" id="micBtnQ" onclick="startMic('${q.ar.replace(/'/g,"\\'")}','micBtnQ')">🎤 Telaffuz Et</button>
@@ -2866,7 +3178,7 @@ const PRAISE=[
   {ar:'مُمْتَازٌ!',tr:'Mükemmel!'},
   {ar:'أَحْسَنْتَ!',tr:'Bravo!'},
   {ar:'رَائِعٌ!',tr:'Harika!'},
-  {ar:'مَمْتَازٌ!',tr:'Süper!'},
+  {ar:'مُمْتَازٌ!',tr:'Süper!'},
 ];
 
 function selectOpt(idx){
@@ -2912,8 +3224,10 @@ function showChResult(){
   P().xp+=ok*5; // bonus
   P().streak=Math.min(365,P().streak+1);
   P().weekProg=Math.min(100,P().weekProg+20);
-  P().lessonDay=(P().lessonDay||1)+1;
-  if(!P().done.includes(curCh.id))P().done.push(curCh.id);
+  if(curCh.id!=='srs-review'){
+    P().lessonDay=(P().lessonDay||1)+1;
+    if(!P().done.includes(curCh.id))P().done.push(curCh.id);
+  }
   updateHeader();save();
   maybeAutoBackup();
   if(pct>=80)launchConfetti();
@@ -2928,7 +3242,7 @@ function showChResult(){
         <div class="rs"><div class="num">${pct}%</div><div class="lbl">Başarı</div></div>
         <div class="rs"><div class="num">${P().streak}</div><div class="lbl">Seri🔥</div></div>
       </div>
-      ${srsDueCount()>0?`<p style="font-size:0.82rem;color:var(--rose);font-weight:700;margin-bottom:12px">🔄 ${srsDueCount()} kelime tekrar bekliyor!</p>`:''}
+      ${srsDueCount()>0?`<button class="cont-btn" style="background:var(--rose);margin-bottom:10px" onclick="startSrsQuiz()">🔄 ${srsDueCount()} Bekleyen Kelimeyi Tekrar Et</button>`:''}
       <button class="cont-btn amber" onclick="showView('home');renderAll()">Ana Sayfaya Dön 🏠</button>
     </div>`;
   renderMascot('result');
